@@ -18,11 +18,7 @@ export class CharacterCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  getThumbnail() {
-    return this.hero.thumbnail.path+'.'+this.hero.thumbnail.extension;
-  }
-
-  showDetails(id:number) {
-    this._store.dispatch(new SelectHero(id));
+  showDetails(hero: Hero) {
+    this._store.dispatch(new SelectHero(hero));
   }
 }

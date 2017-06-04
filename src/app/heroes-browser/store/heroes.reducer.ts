@@ -25,10 +25,11 @@ export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = d
         case actions.SELECT_HERO:
             newState = Object.assign({}, state, {selected: action.payload});
             break;
+        case actions.UNSELECT_HERO:
+            newState = Object.assign({}, state, {selected: undefined});
+            break;
         default:
             newState = state;
     }
-
-    console.log(newState);
     return newState;
 };

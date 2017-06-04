@@ -4,5 +4,5 @@ export interface HeroesData {
     offset: number,
     heroes: Hero[],
     filter: string,
-    selected: number
+    selected: Hero
 }

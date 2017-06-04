@@ -1,0 +1,12 @@
+<div *ngIf="selected !== undefined" id="details-bar">
+  <span id="close" (click)="closeBar()">CLOSE</span>
+<div id="image">
+  <img [width]="'500'" [src]="selected.getThumbnail()" alt="">
+</div>
+<div id="description">
+  <h3>{{selected.name}}</h3>
+  <p class="description">{{selected.description}}</p>
+</div>
+<div id="related-heroes"></div>
+<button class="btn btn-danger">More Details</button>
+</div>

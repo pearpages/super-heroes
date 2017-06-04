@@ -1,3 +1,4 @@
+import { SuperHero } from './../models/super-hero';
 import { HeroesData } from './../models/heroes-data';
 import { Observable } from 'rxjs/Rx';
 import * as actions from '../store/heroes.actions';
@@ -35,10 +36,14 @@ function _loadJson(): Hero[] {
   const res1 = (<any>response1);
   const res2 = (<any>response2);
   const res3 = (<any>response3);
-  const res = [].concat(res1.data.results, res2.data.results, res3.data.results);
+  const res = [].concat(res1.data.results.map(_mapHeroes), res2.data.results.map(_mapHeroes), res3.data.results).map(_mapHeroes);
   return res;
 }
 
 function _loadOffset(index: number) {
-  return _heroes.slice(index, index+50);
+  return _heroes.slice(index, index + 50);
+}
+
+function _mapHeroes(data: Hero): SuperHero {
+  return new SuperHero(data);
 }
