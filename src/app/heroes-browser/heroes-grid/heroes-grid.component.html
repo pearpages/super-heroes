@@ -1,5 +1,7 @@
 <div class="heroes-grid">
-
-    <app-character-card *ngFor="let hero of heroes; let i = index" [hero]="hero"></app-character-card>
-
+  <div *ngFor="let hero of heroes; let i = index">
+    <div class="col-md-3 col-sm-6 col-xs-12 m-t-1 p-1" style="float: left;">
+      <app-character-card [hero]="hero"></app-character-card>
+    </div>
+  </div>
 </div>

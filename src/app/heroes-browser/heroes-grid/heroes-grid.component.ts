@@ -12,10 +12,10 @@ export class HeroesGridComponent implements OnInit {
   heroes: Hero[];
 
   constructor(private _heroes: HeroesService) {
-    this.heroes = this._heroes.fakeData(50);
   }
 
   ngOnInit() {
+    this.heroes = this._heroes.fakeData(50);
   }
 
 }
