@@ -1,3 +1,6 @@
+import { SelectHero } from './../../store/heroes.actions';
+import { HeroesStore } from './../../store/heroes-store';
+import { Store } from '@ngrx/store';
 import { Hero } from './../../models/hero';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -10,12 +13,16 @@ export class CharacterCardComponent implements OnInit {
 
   @Input() hero: Hero;
 
-  constructor() { }
+  constructor(private _store:Store<HeroesStore>) { }
 
   ngOnInit() {
   }
 
   getThumbnail() {
     return this.hero.thumbnail.path+'.'+this.hero.thumbnail.extension;
+  }
+
+  showDetails(id:number) {
+    this._store.dispatch(new SelectHero(id));
   }
 }

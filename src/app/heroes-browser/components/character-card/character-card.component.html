@@ -1,4 +1,4 @@
-<div class="character-card">
+<div class="character-card" (click)="showDetails(hero.id)">
   <div class="main">
     <span *ngIf="hero.favourite === true">FAVOURITE</span>
     <img [width]="'300'" [height]="'300'" [src]="getThumbnail()" alt="">

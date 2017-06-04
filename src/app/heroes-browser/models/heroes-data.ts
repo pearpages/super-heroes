@@ -3,5 +3,6 @@ import { Hero } from './hero';
 export interface HeroesData {
     offset: number,
     heroes: Hero[],
-    filter: string
+    filter: string,
+    selected: number
 }
