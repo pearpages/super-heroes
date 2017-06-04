@@ -18,4 +18,8 @@ export class HeroesGridComponent implements OnInit {
     this.heroes = this._heroes.fakeData(50);
   }
 
+  onScroll() {
+    this.heroes = this.heroes.concat(this._heroes.fakeData(50));
+    console.log('loaded');
+  }
 }

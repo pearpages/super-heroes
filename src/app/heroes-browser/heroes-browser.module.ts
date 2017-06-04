@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FilterComponent } from './filter/filter.component';
 import { CharacterCardComponent } from './character-card/character-card.component';
 import { HeroesGridComponent } from './heroes-grid/heroes-grid.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,InfiniteScrollModule
   ],
   declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent],
   exports: [FilterComponent, HeroesGridComponent],
