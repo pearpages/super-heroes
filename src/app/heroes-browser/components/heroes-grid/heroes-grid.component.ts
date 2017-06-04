@@ -1,5 +1,5 @@
-import { HeroesService } from './../heroes.service';
-import { Hero } from './../hero';
+import { Hero } from './../../models/hero';
+import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -20,6 +20,5 @@ export class HeroesGridComponent implements OnInit {
 
   onScroll() {
     this.heroes = this.heroes.concat(this._heroes.fakeData(50));
-    console.log('loaded');
   }
 }

@@ -1,4 +1,4 @@
-import { Hero } from './../hero';
+import { Hero } from './../../models/hero';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

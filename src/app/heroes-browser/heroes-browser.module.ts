@@ -1,9 +1,9 @@
-import { HeroesService } from './heroes.service';
+import { HeroesService } from './services/heroes.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterComponent } from './filter/filter.component';
-import { CharacterCardComponent } from './character-card/character-card.component';
-import { HeroesGridComponent } from './heroes-grid/heroes-grid.component';
+import { FilterComponent } from './components/filter/filter.component';
+import { CharacterCardComponent } from './components/character-card/character-card.component';
+import { HeroesGridComponent } from './components/heroes-grid/heroes-grid.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
