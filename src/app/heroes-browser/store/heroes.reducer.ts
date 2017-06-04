@@ -1,11 +1,20 @@
+import { HeroesData } from './../models/heroes-data';
 import { Hero } from './../models/hero';
-import {Action, ActionReducer} from '@ngrx/store';
+import { Action, ActionReducer } from '@ngrx/store';
 import * as actions from './heroes.actions';
 
-export const heroes: ActionReducer<Hero[]> = function (state:Hero[] = [], action:Action) {
-    switch(action.type) {
+const defaultData = {
+    heroes: [],
+    offset: 0
+};
+
+export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = defaultData, action: Action) {
+    switch (action.type) {
         case actions.ADD_HEROES:
-            return [...state,...action.payload];
+            return Object.assign({}, state, {
+                heroes: [...state.heroes, ...action.payload],
+                offset: (state.offset + action.payload.length)
+            });
         default:
             return state;
     }

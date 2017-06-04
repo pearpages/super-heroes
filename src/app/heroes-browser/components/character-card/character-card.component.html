@@ -1,7 +1,21 @@
 <div class="character-card">
   <div class="main">
     <span *ngIf="hero.favourite === true">FAVOURITE</span>
-    {{hero.main}}
+    <img [width]="'300'" [height]="'300'" [src]="getThumbnail()" alt="">
   </div>
-  <div class="footer">{{hero.footer}}</div>
+  <div class="footer">{{hero.name}}</div>
 </div>
+
+<!--export interface Hero {
+    comics: object
+    description: string,
+    events: object,
+    id: number,
+    modified: string,
+    name: string,
+    resourceURI: string,
+    series: object,
+    stories: object,
+    thumbnail: object,
+    urls: any[]
+}-->
