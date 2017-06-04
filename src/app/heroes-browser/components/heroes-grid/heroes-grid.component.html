@@ -4,7 +4,7 @@
 		    (scrolled)="onScroll()"
         [scrollWindow]="false"
         style="height: 100vh; overflow:scroll">
-  <div *ngFor="let hero of heroes; let i = index" >
+  <div *ngFor="let hero of heroes$ | async; let i = index " >
     <div class="col-md-3 col-sm-6 col-xs-12 m-t-1 p-1" style="float: left;">
       <app-character-card [hero]="hero"></app-character-card>
     </div>

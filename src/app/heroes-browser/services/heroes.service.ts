@@ -1,12 +1,25 @@
+import { HeroesStore } from './../store/heroes-store';
+import { Observable } from 'rxjs/Rx';
+import * as actions from '../store/heroes.actions';
 import { Hero } from './../models/hero';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class HeroesService {
+  heroes$: Observable<Hero[]> = this._store.select('heroes');
 
-  constructor() { }
+  constructor(private _store: Store<HeroesStore>) { }
 
-  fakeData(total: number): Hero[] {
+  getHeroes(): Observable<Hero[]> {
+    return this.heroes$;
+  }
+
+  getMoreHeroes() {
+    this._store.dispatch(new actions.AddHeroes(this._fakeData(50)));
+  }
+
+  private _fakeData(total: number): Hero[] {
     const res = [];
     for (let i = 0; i < total; i++) {
       res.push({

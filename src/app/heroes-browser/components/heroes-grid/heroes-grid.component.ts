@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { Hero } from './../../models/hero';
 import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,16 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroesGridComponent implements OnInit {
 
-  heroes: Hero[];
+  heroes$: Observable<Hero[]>;
 
   constructor(private _heroes: HeroesService) {
   }
 
   ngOnInit() {
-    this.heroes = this._heroes.fakeData(50);
+    this.heroes$ = this._heroes.getHeroes();
+    this._heroes.getMoreHeroes();
   }
 
   onScroll() {
-    this.heroes = this.heroes.concat(this._heroes.fakeData(50));
+    this._heroes.getMoreHeroes();
   }
 }
