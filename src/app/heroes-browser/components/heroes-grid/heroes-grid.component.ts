@@ -17,7 +17,15 @@ export class HeroesGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._heroes.getHeroes().subscribe( (d) => this.heroes = d.heroes);
+    this._heroes.getHeroes().subscribe((d) => {
+      this.heroes = d.heroes.filter((h) => {
+        if (d['filter'] === '') {
+          return true;
+        } else {
+          return h.name.indexOf(d['filter']) === 0;
+        }
+      });
+    });
   }
 
   onScroll() {

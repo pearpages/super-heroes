@@ -5,7 +5,8 @@ import * as actions from './heroes.actions';
 
 const defaultData = {
     heroes: [],
-    offset: 0
+    offset: 0,
+    filter: ''
 };
 
 export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = defaultData, action: Action) {
@@ -15,6 +16,8 @@ export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = d
                 heroes: [...state.heroes, ...action.payload],
                 offset: (state.offset + action.payload.length)
             });
+        case actions.UPDATE_FILTER:
+            return Object.assign({}, state, {filter: action.payload});
         default:
             return state;
     }
