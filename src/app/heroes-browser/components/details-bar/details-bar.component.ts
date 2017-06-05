@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-details-bar',
   templateUrl: './details-bar.component.html',
-  styleUrls: ['./details-bar.component.sass']
+  styleUrls: ['./details-bar.component.scss']
 })
 export class DetailsBarComponent implements OnInit {
 

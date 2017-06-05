@@ -1,5 +1,5 @@
 <div *ngIf="selected !== undefined" id="details-bar" class="b-color-3-t">
-  <span id="close" (click)="closeBar()">CLOSE</span>
+  <span id="close" (click)="closeBar()" class="fa fa-close"></span>
   <div id="image">
     <img [width]="'500'" [src]="selected.getThumbnail()" alt="">
   </div>
