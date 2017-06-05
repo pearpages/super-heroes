@@ -1,6 +1,6 @@
 import { HeroesStore } from './../../store/heroes-store';
 import { SuperHero } from './../../models/super-hero';
-import { UnselectHero } from './../../store/heroes.actions';
+import { UnselectHero, ShowDetails } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 
@@ -23,6 +23,10 @@ export class DetailsBarComponent implements OnInit {
 
   closeBar() {
     this._store.dispatch(new UnselectHero());
+  }
+
+  showDetails() {
+    this._store.dispatch(new ShowDetails());
   }
 
 }

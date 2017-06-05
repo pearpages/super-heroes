@@ -17,7 +17,7 @@ import { DetailsComponent } from './components/details/details.component';
     InfiniteScrollModule
   ],
   declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent],
-  exports: [FilterComponent, HeroesGridComponent,DetailsBarComponent],
+  exports: [FilterComponent, HeroesGridComponent,DetailsBarComponent,DetailsComponent],
   providers: [HeroesService]
 })
 export class HeroesBrowserModule { }

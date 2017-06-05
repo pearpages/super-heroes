@@ -7,7 +7,8 @@ const defaultData = {
     heroes: [],
     offset: 0,
     filter: '',
-    selected: undefined
+    selected: undefined,
+    details: false
 };
 
 export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = defaultData, action: Action) {
@@ -27,6 +28,12 @@ export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = d
             break;
         case actions.UNSELECT_HERO:
             newState = Object.assign({}, state, {selected: undefined});
+            break;
+        case actions.SHOW_DETAILS:
+            newState = Object.assign({}, state, {details: true});
+            break;
+        case actions.HIDE_DETAILS:
+            newState = Object.assign({}, state, {details: false});
             break;
         default:
             newState = state;

@@ -1,8 +1,9 @@
+import { Comic } from './comic';
 import { Hero } from './hero';
 
 export class SuperHero {
 
-    comics: any;
+    comics?: Comic[];
     description: string;
     events: any;
     id: number;

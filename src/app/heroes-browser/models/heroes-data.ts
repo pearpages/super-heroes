@@ -1,8 +1,9 @@
-import { Hero } from './hero';
+import { SuperHero } from './super-hero';
 
 export interface HeroesData {
     offset: number,
-    heroes: Hero[],
+    heroes: SuperHero[],
     filter: string,
-    selected: Hero
+    selected: SuperHero,
+    details: boolean
 }

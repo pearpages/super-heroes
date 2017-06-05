@@ -1,5 +1,5 @@
 export interface Hero {
-    comics: any,
+    comics?: any,
     description: string,
     events: any,
     id: number,

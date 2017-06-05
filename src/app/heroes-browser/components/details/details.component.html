@@ -1,19 +1,25 @@
-<div>
-  <header>
-    <button>Back</button>
+<div id="details" class="b-color-3" *ngIf="state.details === true">
+  <header class="b-color-1">
+    <button (click)="closeDetails()">Back</button>
+    <div class="separator b-color-2"></div>
   </header>
-  <div class="main container">
+  <div class="main p-5">
     <div class="row">
       <div class="col-md-4">
-        <img src="" alt="">
+        <img [width]="300" [src]="hero.getThumbnail()" alt="">
         <h6>Related Heroes</h6>
         <button class="btn b-color-1">Save as Favorite</button>
       </div>
       <div class="col-md-8">
-        <h2>Name</h2>
-        <div class="description"></div>
+        <h2>{{hero.name}}</h2>
+        <div class="description">{{hero.description}}</div>
         <h3>Comics</h3>
+        <div *ngFor="let item of hero.comics" style="float:left">
+          <img [width]="'75'" [src]="item.getThumbnail()" alt="">
+        </div>
+        <hr style="clear:left">
         <h3>Also appears in...</h3>
+        <pre style="overflow: scroll; height: 500px"></pre>
       </div>
     </div>
   </div>

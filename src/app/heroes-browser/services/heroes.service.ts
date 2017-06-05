@@ -1,3 +1,5 @@
+import { ComicInterface } from './../models/comic-interface';
+import { Comic } from './../models/comic';
 import { SuperHero } from './../models/super-hero';
 import { HeroesData } from './../models/heroes-data';
 import { Observable } from 'rxjs/Rx';
@@ -9,8 +11,10 @@ import { HeroesStore } from './../store/heroes-store';
 import * as response1 from './response1.json';
 import * as response2 from './response2.json';
 import * as response3 from './response3.json';
+import * as comics from './comics-response.json';
 
-const _heroes: Hero[] = _loadJson();;
+const _comics: Comic[] = _loadJsonComics();
+const _heroes: Hero[] = _loadJson();
 
 @Injectable()
 export class HeroesService {
@@ -32,6 +36,11 @@ export class HeroesService {
 
 }
 
+function _loadJsonComics():Comic[] {
+  const c = <any>comics;
+  return c.data.results.map(_mapComics);
+}
+
 function _loadJson(): Hero[] {
   const res1 = (<any>response1);
   const res2 = (<any>response2);
@@ -45,5 +54,11 @@ function _loadOffset(index: number) {
 }
 
 function _mapHeroes(data: Hero): SuperHero {
-  return new SuperHero(data);
+  const h:SuperHero =  new SuperHero(data);
+  h.comics = _comics;
+  return h;
+}
+
+function _mapComics(data: ComicInterface): Comic {
+  return new Comic(data);
 }
