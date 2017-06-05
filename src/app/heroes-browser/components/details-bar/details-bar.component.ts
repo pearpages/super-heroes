@@ -1,6 +1,6 @@
-import { UnselectHero } from './../store/heroes.actions';
-import { SuperHero } from './../models/super-hero';
-import { HeroesStore } from './../store/heroes-store';
+import { HeroesStore } from './../../store/heroes-store';
+import { SuperHero } from './../../models/super-hero';
+import { UnselectHero } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 
