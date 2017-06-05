@@ -1,6 +1,5 @@
-$fa-font-path : '../node_modules/font-awesome/fonts';
+$fa-font-path: '../node_modules/font-awesome/fonts';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
-
 .b-color-1 {
     background-color: #d0021b;
 }
@@ -18,15 +17,38 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 }
 
 @-moz-keyframes spin {
-    to { -moz-transform: rotate(359deg); }
+    to {
+        -moz-transform: rotate(359deg);
+    }
 }
+
 @-webkit-keyframes spin {
-    to { -webkit-transform: rotate(359deg); }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
 }
+
 @keyframes spin {
-    to {transform:rotate(359deg);}
+    to {
+        transform: rotate(359deg);
+    }
 }
 
 .spin {
     animation: spin 1000ms linear infinite;
+}
+
+.image-available {
+    background: #CCC center center;
+    background-size: cover;
+}
+
+.image-not-available {
+    background: #CCC bottom left;
+    background-size: cover;
+}
+
+.image-not-available2 {
+    background: #CCC bottom right;
+    background-size: cover;
 }

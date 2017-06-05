@@ -1,7 +1,7 @@
 import { SelectHero } from './../../store/heroes.actions';
 import { HeroesStore } from './../../store/heroes-store';
 import { Store } from '@ngrx/store';
-import { Hero } from './../../models/hero';
+import { SuperHero } from './../../models/super-hero';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -11,14 +11,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CharacterCardComponent implements OnInit {
 
-  @Input() hero: Hero;
+  @Input() hero: SuperHero;
 
   constructor(private _store:Store<HeroesStore>) { }
 
   ngOnInit() {
   }
 
-  showDetails(hero: Hero) {
+  showDetails(hero: SuperHero) {
     this._store.dispatch(new SelectHero(hero));
   }
+
 }

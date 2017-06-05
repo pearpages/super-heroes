@@ -6,10 +6,16 @@
     font-size: 12px;
     .main {
         border: #CCC 4px solid;
+        position: relative;
         .inner {
             height: 236px;
-            background: #CCC center center;
-            background-size: cover;
+        }
+        .favorite {
+            color: #f9ca2c;
+            font-size: 18px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
     }
     .footer {
@@ -23,7 +29,7 @@
     }
 }
 .character-card:hover {
-    box-shadow: darken(#d0021b,25%) 0px 3px 5px 1px;
+    box-shadow: darken(#f9ca2c,25%) 0px 3px 5px 1px;
     .footer {
         text-decoration: underline;
     }

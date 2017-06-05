@@ -14,6 +14,7 @@ export class SuperHero {
     stories: any;
     thumbnail: any;
     urls: any[];
+    favorite: boolean = true;
 
     constructor(data: Hero) {
         this.comics = data.comics;
@@ -29,7 +30,19 @@ export class SuperHero {
         this.urls = data.urls;
     }
 
-    getThumbnail() {
+    getThumbnail():string {
         return this.thumbnail.path + '.' + this.thumbnail.extension;
+    }
+
+    getCssClass():string {
+        const path = this.thumbnail.path.split('/');
+        const filename = path[path.length -1];
+        let res = 'image-available';
+        if( filename === 'image_not_available' ){
+            res = 'image-not-available';
+        } else if (filename === '4c002e0305708') {
+            res = 'image-not-available2';
+        }
+        return res;
     }
 }
