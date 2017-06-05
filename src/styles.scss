@@ -16,3 +16,17 @@ $fa-font-path : '../node_modules/font-awesome/fonts';
 .b-color-3-t {
     background-color: rgba(231, 184, 187, 0.9);
 }
+
+@-moz-keyframes spin {
+    to { -moz-transform: rotate(359deg); }
+}
+@-webkit-keyframes spin {
+    to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spin {
+    to {transform:rotate(359deg);}
+}
+
+.spin {
+    animation: spin 1000ms linear infinite;
+}

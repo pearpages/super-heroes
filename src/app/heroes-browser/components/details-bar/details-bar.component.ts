@@ -25,6 +25,10 @@ export class DetailsBarComponent implements OnInit {
     return (this.selected) ? 'ready' : '';
   }
 
+  loading(): boolean {
+    return this.selected['related'] === undefined;
+  }
+
   closeBar() {
     this._store.dispatch(new UnselectHero());
   }

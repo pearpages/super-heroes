@@ -7,7 +7,10 @@
         <h3>{{selected.name}}</h3>
         <p class="description">{{selected.description}}</p>
       </div>
-      <div id="related-heroes"></div>
+      <div id="related-heroes">
+        <h4>Related Heroes</h4>
+        <div class="loading" *ngIf="loading()"><span class="fa fa-spinner spin"></span> loading</div>
+      </div>
       <button class="btn b-color-1 btn-block" (click)="showDetails()">More Details</button>
     </div>
   </div>
