@@ -17,8 +17,12 @@ export class DetailsBarComponent implements OnInit {
 
   ngOnInit() {
     this._store.select('heroes').subscribe( (h) => {
-      this.selected = h['selected'];
+      setTimeout(() => this.selected = h['selected'],0);
     });
+  }
+
+  animate(): string {
+    return (this.selected) ? 'ready' : '';
   }
 
   closeBar() {

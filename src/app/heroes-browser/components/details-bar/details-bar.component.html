@@ -1,14 +1,16 @@
-<div *ngIf="selected !== undefined" id="details-bar" class="b-color-3-t">
-  <span id="close" (click)="closeBar()" class="fa fa-close"></span>
-  <div id="image">
-    <img [width]="'500'" [src]="selected.getThumbnail()" alt="">
-  </div>
-  <div class="p-4">
-    <div id="description">
-      <h3>{{selected.name}}</h3>
-      <p class="description">{{selected.description}}</p>
+<div id="details-bar" [class]="'b-color-3-t '+animate()">
+  <div class="wrapper" *ngIf="selected !== undefined">
+    <span id="close" (click)="closeBar()" class="fa fa-window-close"></span>
+    <div id="image">
+      <img [width]="'500'" [src]="selected.getThumbnail()" alt="">
     </div>
-    <div id="related-heroes"></div>
-    <button class="btn b-color-1 btn-block" (click)="showDetails()">More Details</button>
+    <div class="p-4">
+      <div id="description">
+        <h3>{{selected.name}}</h3>
+        <p class="description">{{selected.description}}</p>
+      </div>
+      <div id="related-heroes"></div>
+      <button class="btn b-color-1 btn-block" (click)="showDetails()">More Details</button>
+    </div>
   </div>
 </div>

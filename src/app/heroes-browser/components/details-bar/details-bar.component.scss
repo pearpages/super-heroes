@@ -5,14 +5,24 @@
     right: 0;
     width: 500px;
     z-index: 2000;
-    #close {
-        position: fixed;
-        top: 0;
-        right: 0;
-        padding: 20px;
-        cursor: pointer;
+    margin-right: -505px;
+    transition: margin-right 300ms;
+    box-shadow: #333 -5px 2px 15px;
+    .wrapper {
+        position: relative;
+        #close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 20px;
+            cursor: pointer;
+            color: #ccc;
+        }
+        button {
+            color: white;
+        }
     }
-    button {
-        color: white;
-    }
+}
+#details-bar.ready {
+    margin-right: 0;
 }
