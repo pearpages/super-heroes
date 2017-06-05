@@ -5,7 +5,7 @@
     <div class="p-4">
       <div id="description">
         <h3>{{selected.name}}</h3>
-        <p class="description">{{selected.description}}</p>
+        <p class="description">{{selected.description ? selected.description : 'No Description Available'}}</p>
       </div>
       <div id="related-heroes">
         <h4>Related Heroes</h4>
