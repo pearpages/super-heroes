@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { DetailsBarComponent } from './components/details-bar/details-bar.component';
 import { heroes } from './store/heroes.reducer';
 import { HeroesService } from './services/heroes.service';
@@ -14,6 +15,7 @@ import { DetailsComponent } from './components/details/details.component';
   imports: [
     CommonModule,
     StoreModule.provideStore({heroes}),
+    HttpModule,
     InfiniteScrollModule
   ],
   declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent],
