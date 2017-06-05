@@ -12,6 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CharacterCardComponent implements OnInit {
 
   @Input() hero: SuperHero;
+  imageLoaded = false;
 
   constructor(private _store:Store<HeroesStore>) { }
 
@@ -22,4 +23,7 @@ export class CharacterCardComponent implements OnInit {
     this._store.dispatch(new SelectHero(hero));
   }
 
+  log() {
+    console.log('loaded');
+  }
 }
