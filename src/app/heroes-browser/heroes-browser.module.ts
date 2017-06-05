@@ -8,6 +8,7 @@ import { FilterComponent } from './components/filter/filter.component';
 import { CharacterCardComponent } from './components/character-card/character-card.component';
 import { HeroesGridComponent } from './components/heroes-grid/heroes-grid.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { DetailsComponent } from './components/details/details.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     StoreModule.provideStore({heroes}),
     InfiniteScrollModule
   ],
-  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent],
+  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent],
   exports: [FilterComponent, HeroesGridComponent,DetailsBarComponent],
   providers: [HeroesService]
 })
