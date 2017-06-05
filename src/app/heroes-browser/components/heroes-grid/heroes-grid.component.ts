@@ -26,6 +26,7 @@ export class HeroesGridComponent implements OnInit {
         }
       });
     });
+    this._heroes.getMoreHeroes();
   }
 
   onScroll() {

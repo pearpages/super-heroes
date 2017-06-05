@@ -1,3 +1,4 @@
+import {HeroesService} from '../../services/heroes.service';
 import { HeroesStore } from './../../store/heroes-store';
 import { SuperHero } from './../../models/super-hero';
 import { UnselectHero, ShowDetails } from './../../store/heroes.actions';
@@ -13,7 +14,7 @@ export class DetailsBarComponent implements OnInit {
 
   selected: SuperHero;
 
-  constructor(private _store:Store<HeroesStore>) { }
+  constructor(private _store:Store<HeroesStore>,private _heroes: HeroesService) { }
 
   ngOnInit() {
     this._store.select('heroes').subscribe( (h) => {

@@ -1,3 +1,4 @@
+import { MyCacheService } from './services/my-cache.service';
 import { HttpModule } from '@angular/http';
 import { DetailsBarComponent } from './components/details-bar/details-bar.component';
 import { heroes } from './store/heroes.reducer';
@@ -20,6 +21,6 @@ import { DetailsComponent } from './components/details/details.component';
   ],
   declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent],
   exports: [FilterComponent, HeroesGridComponent,DetailsBarComponent,DetailsComponent],
-  providers: [HeroesService]
+  providers: [HeroesService,MyCacheService]
 })
 export class HeroesBrowserModule { }

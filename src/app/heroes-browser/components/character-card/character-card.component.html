@@ -1,6 +1,6 @@
 <div class="character-card" (click)="showDetails(hero)">
   <div class="main">
-    <img [style.display]="'none'" (load)="imageLoaded=true" [src]="hero.getThumbnail()" />
+    <img *ngIf="!imageLoaded" [style.display]="'none'" (load)="imageLoaded=true" [src]="hero.getThumbnail()" />
     <div *ngIf="imageLoaded" [class]="'inner '+hero.getCssClass()" [style.background-image]="'url('+hero.getThumbnail()+')'">
       <span *ngIf="hero.favorite === true" class="fa fa-star favorite"></span>
     </div>

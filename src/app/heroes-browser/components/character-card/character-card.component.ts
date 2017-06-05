@@ -23,7 +23,4 @@ export class CharacterCardComponent implements OnInit {
     this._store.dispatch(new SelectHero(hero));
   }
 
-  log() {
-    console.log('loaded');
-  }
 }

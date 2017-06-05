@@ -15,28 +15,37 @@ export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = d
     let newState;
     switch (action.type) {
         case actions.ADD_HEROES:
-            newState = Object.assign({}, state, {
-                heroes: [...state.heroes, ...action.payload],
-                offset: (state.offset + action.payload.length)
-            });
+            if (state.offset === action.payload.offset) {
+                newState = Object.assign({}, state, {
+                    heroes: [...state.heroes, ...action.payload.heroes],
+                    offset: (state.offset + action.payload.heroes.length)
+                });
+            } else {
+                newState = state;
+            }
             break;
         case actions.UPDATE_FILTER:
-            newState = Object.assign({}, state, {filter: action.payload});
+            if (action.payload === '') {
+                newState = Object.assign({}, state, { heroes: state.heroes.slice(0,50),offset: 50, filter: action.payload });
+            } else {
+                newState = Object.assign({}, state, { filter: action.payload });
+            }
             break;
         case actions.SELECT_HERO:
-            newState = Object.assign({}, state, {selected: action.payload});
+            newState = Object.assign({}, state, { selected: action.payload });
             break;
         case actions.UNSELECT_HERO:
-            newState = Object.assign({}, state, {selected: undefined});
+            newState = Object.assign({}, state, { selected: undefined });
             break;
         case actions.SHOW_DETAILS:
-            newState = Object.assign({}, state, {details: true});
+            newState = Object.assign({}, state, { details: true });
             break;
         case actions.HIDE_DETAILS:
-            newState = Object.assign({}, state, {details: false});
+            newState = Object.assign({}, state, { details: false });
             break;
         default:
             newState = state;
     }
+    console.log(action, newState);
     return newState;
 };

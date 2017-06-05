@@ -1,3 +1,4 @@
+import { SuperHero } from './../models/super-hero';
 import { Hero } from './../models/hero';
 import { Action } from '@ngrx/store';
 
@@ -10,7 +11,7 @@ export const HIDE_DETAILS = '[Heroes Browser] Hide Details';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
-    constructor(public payload: Hero[]) {}
+    constructor(public payload: {heroes: SuperHero[], offset: number}) {}
 }
 
 export class UpdateFilter implements Action {
