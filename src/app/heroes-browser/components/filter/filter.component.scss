@@ -1,4 +1,15 @@
 .heroes-filter {
+    padding: 8px;
     background: black;
     color: white;
+    input {
+        background: black;
+        color: #BBB;
+        text-indent: 14px;
+        border: none;
+        width: 100%;
+    }
+    input:focus {
+        outline: none;
+    }
 }

@@ -1,11 +1,12 @@
 .character-card {
     overflow: hidden;
     .main {
-        padding: 8px;
-        background-color: grey;
-        height: 236px;
-        overflow: hidden;
-        text-align: center;
+        border: #CCC 4px solid;
+        .inner {
+            height: 236px;
+            background: #CCC center center;
+            background-size: cover;
+        }
     }
     .footer {
         padding: 8px;

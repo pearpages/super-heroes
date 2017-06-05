@@ -1,7 +1,9 @@
 <div class="character-card" (click)="showDetails(hero)">
   <div class="main">
-    <span *ngIf="hero.favourite === true">FAVOURITE</span>
-    <img [title]="hero.name" class="img-fluid" [height]="'300'" [src]="hero.getThumbnail()" [alt]="hero.id">
+    <div class="inner" [style.background-image]="'url('+hero.getThumbnail()+')'">
+      <span *ngIf="hero.favourite === true">FAVOURITE</span>
+      <!--<img [title]="hero.name" class="img-fluid" [height]="'300'" [src]="hero.getThumbnail()" [alt]="hero.id">-->
+    </div>
   </div>
   <div class="footer">{{hero.name}}</div>
 </div>
