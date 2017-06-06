@@ -1,3 +1,5 @@
+import { AddRelated } from './../store/heroes.actions';
+import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
 import { ComicInterface } from './../models/comic-interface';
@@ -23,13 +25,30 @@ export class HeroesService {
   constructor(private _store: Store<HeroesStore>, private _myCache: MyCacheService) {
 
     this.heroes$.flatMap((state) => {
-      return this._myCache.get(`${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
-    }).subscribe(h => {
-      const heroes = h.map(_mapHeroes);
-      this._store.dispatch(new actions.AddHeroes({ heroes }));
+      if (state.selected) {
+        console.log('selected');
+        const url = state.selected.series.collectionURI;
+        return this._myCache.get(`${url}?apikey=${apikey}`);
+      } else {
+        console.log('whatever');
+        return this._myCache.get(`${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
+      }
+    }).subscribe((data: any[]) => {
+      if (data.length > 0) {
+        if (!data[0].hasOwnProperty('characters')) {
+          const heroes = data.map(_mapHeroes);
+          this._store.dispatch(new actions.AddHeroes({ heroes }));
+        } else {
+          let res = [];
+          data.forEach((serie) => {
+            serie['characters']['items'].forEach((c) => res.push({ name: c.name, id: parseInt(c.resourceURI.split('/').pop()) }));
+          });
+          console.log(res);
+          this._store.dispatch(new AddRelated(res));
+        }
+      }
     });
   }
-
 }
 
 function _loadJsonComics(): Comic[] {

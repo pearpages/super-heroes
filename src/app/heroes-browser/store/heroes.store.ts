@@ -7,5 +7,6 @@ export interface HeroesStore {
     selected: SuperHero,
     details: boolean,
     loading: boolean,
-    moreData: boolean
+    moreData: boolean,
+    all: Object
 }

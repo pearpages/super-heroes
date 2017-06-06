@@ -9,6 +9,7 @@ export const UNSELECT_HERO = '[Heroes Browser] Unselect Hero';
 export const SHOW_DETAILS = '[Heroes Browser] Show Details';
 export const HIDE_DETAILS = '[Heroes Browser] Hide Details';
 export const LOAD_MORE = '[Heroes Browser] Load More';
+export const ADD_RELATED = '[Heroes Browser] Add Related';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
@@ -39,4 +40,9 @@ export class ShowDetails implements Action {
 
 export class HideDetails implements Action {
     readonly type = HIDE_DETAILS;
+}
+
+export class AddRelated implements Action {
+    readonly type = ADD_RELATED;
+    constructor(public payload: {name:string,id:number}[]){}
 }
