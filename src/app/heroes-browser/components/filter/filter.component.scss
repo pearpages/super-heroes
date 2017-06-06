@@ -2,6 +2,13 @@
     padding: 8px;
     background: black;
     color: white;
+    position: relative;
+    .btn {
+        cursor: pointer;
+        position: absolute;
+        right: 4px;
+        top: 8px;
+    }
     input {
         background: black;
         color: #BBB;

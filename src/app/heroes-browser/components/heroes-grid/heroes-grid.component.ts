@@ -1,3 +1,5 @@
+import { LoadMore } from './../../store/heroes.actions';
+import { Store } from '@ngrx/store';
 import { Hero } from './../../models/hero';
 import { Observable } from 'rxjs/Rx';
 import { HeroesData } from './../../models/heroes-data';
@@ -13,23 +15,16 @@ export class HeroesGridComponent implements OnInit {
 
   heroes: Hero[] = [];
 
-  constructor(private _heroes: HeroesService) {
+  constructor(private _heroes: HeroesService,private _store: Store<HeroesData>) {
   }
 
   ngOnInit() {
     this._heroes.getHeroes().subscribe((d) => {
-      this.heroes = d.heroes.filter((h) => {
-        if (d['filter'] === '') {
-          return true;
-        } else {
-          return h.name.indexOf(d['filter']) === 0;
-        }
-      });
-    });
-    this._heroes.getMoreHeroes();
+      this.heroes = d.list;
+     });
   }
 
   onScroll() {
-    this._heroes.getMoreHeroes();
+    this._store.dispatch(new LoadMore());
   }
 }

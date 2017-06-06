@@ -1,3 +1,4 @@
+import { Query } from './../models/query';
 import { SuperHero } from './../models/super-hero';
 import { Hero } from './../models/hero';
 import { Action } from '@ngrx/store';
@@ -8,10 +9,15 @@ export const SELECT_HERO = '[Heroes Browser] Select Hero';
 export const UNSELECT_HERO = '[Heroes Browser] Unselect Hero';
 export const SHOW_DETAILS = '[Heroes Browser] Show Details';
 export const HIDE_DETAILS = '[Heroes Browser] Hide Details';
+export const LOAD_MORE = '[Heroes Browser] Load More';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
-    constructor(public payload: {heroes: SuperHero[], offset: number}) {}
+    constructor(public payload: {heroes: SuperHero[]}) {}
+}
+
+export class LoadMore implements Action {
+    readonly type = LOAD_MORE;
 }
 
 export class UpdateFilter implements Action {

@@ -8,7 +8,8 @@ import * as actions from '../store/heroes.actions';
 import { Hero } from './../models/hero';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { HeroesStore } from './../store/heroes-store';
+import { HeroesStore } from './../store/heroes.store';
+import { Subscription } from 'rxjs/Subscription';
 // import * as response1 from './response1.json';
 // import * as response2 from './response2.json';
 // import * as response3 from './response3.json';
@@ -17,28 +18,26 @@ import * as comics from './comics-response.json';
 const _comics: Comic[] = _loadJsonComics();
 // const _heroes: Hero[] = _loadJson();
 
+const apikey = '2ffa799140459e091b3ee3bcb05531e7';
+const url = 'https://gateway.marvel.com:443/v1/public';
+
 @Injectable()
 export class HeroesService {
   heroes$: Observable<HeroesData> = this._store.select('heroes');
-  heroes: HeroesData;
 
   constructor(private _store: Store<HeroesStore>, private _myCache: MyCacheService) {
-    this.heroes$.subscribe((d) => this.heroes = d);
+
+    this.heroes$.flatMap((state) => {
+      return this._myCache.get(`${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
+    }).subscribe(h => {
+      const heroes = h.map(_mapHeroes);
+      this._store.dispatch(new actions.AddHeroes({ heroes }));
+    });
   }
 
   getHeroes(): Observable<HeroesData> {
     return this.heroes$;
   }
-
-  getMoreHeroes() {
-    this._myCache.get('https://gateway.marvel.com:443/v1/public/characters?apikey=2ffa799140459e091b3ee3bcb05531e7&limit=50&offset=' + this.heroes.offset)
-      .subscribe(d => {
-        const heroes = d.map(_mapHeroes);
-        this._store.dispatch(new actions.AddHeroes({heroes:heroes,offset:this.heroes.offset}));
-      });
-
-  }
-
 }
 
 function _loadJsonComics(): Comic[] {

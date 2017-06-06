@@ -1,5 +1,5 @@
 import {HeroesService} from '../../services/heroes.service';
-import { HeroesStore } from './../../store/heroes-store';
+import { HeroesStore } from './../../store/heroes.store';
 import { SuperHero } from './../../models/super-hero';
 import { UnselectHero, ShowDetails } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';

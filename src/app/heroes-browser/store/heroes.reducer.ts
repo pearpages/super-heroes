@@ -1,35 +1,48 @@
+import { SuperHero } from './../models/super-hero';
+import { Query } from './../models/query';
 import { HeroesData } from './../models/heroes-data';
 import { Hero } from './../models/hero';
 import { Action, ActionReducer } from '@ngrx/store';
 import * as actions from './heroes.actions';
 
 const defaultData = {
-    heroes: [],
-    offset: 0,
-    filter: '',
+    list: [],
+    query: new Query('', 0),
     selected: undefined,
-    details: false
+    details: false,
+    scroll: true,
+    ids: {}
 };
 
 export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = defaultData, action: Action) {
     let newState;
     switch (action.type) {
         case actions.ADD_HEROES:
-            if (state.offset === action.payload.offset) {
-                newState = Object.assign({}, state, {
-                    heroes: [...state.heroes, ...action.payload.heroes],
-                    offset: (state.offset + action.payload.heroes.length)
-                });
-            } else {
+            const heroes: SuperHero[] = state.list.slice();
+            let equal: boolean = true;
+            let ids = Object.assign({},state.ids);
+            action.payload.heroes.forEach((hero) => {
+                if (!hasHero(state, hero)) {
+                    heroes.push(hero);
+                    ids[hero.id] = hero.id;
+                    equal = false;
+                }
+            });
+            if (equal) {
                 newState = state;
+            } else {
+                newState = Object.assign({}, state, {
+                    list: heroes,
+                    ids: ids
+                });
             }
             break;
         case actions.UPDATE_FILTER:
-            if (action.payload === '') {
-                newState = Object.assign({}, state, { heroes: state.heroes.slice(0,50),offset: 50, filter: action.payload });
-            } else {
-                newState = Object.assign({}, state, { filter: action.payload });
-            }
+            const scroll = action.payload === '' ? true: false;
+            newState = Object.assign({}, state, { query: new Query(action.payload, 0), list: [], ids: {}, scroll: scroll });
+            break;
+        case actions.LOAD_MORE:
+            newState = Object.assign({}, state, { query: new Query(state.query.filter, state.query.offset + 50), scroll: true});
             break;
         case actions.SELECT_HERO:
             newState = Object.assign({}, state, { selected: action.payload });
@@ -46,6 +59,10 @@ export const heroes: ActionReducer<HeroesData> = function (state: HeroesData = d
         default:
             newState = state;
     }
-    console.log(action, newState);
     return newState;
 };
+
+function hasHero(state: HeroesData, hero: SuperHero):boolean {
+    const res = state.ids[hero.id] !== undefined;
+    return res;
+}

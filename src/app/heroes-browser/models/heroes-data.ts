@@ -1,9 +1,11 @@
+import { Query } from './query';
 import { SuperHero } from './super-hero';
 
 export interface HeroesData {
-    offset: number,
-    heroes: SuperHero[],
-    filter: string,
+    list: SuperHero[],
+    query: Query,
     selected: SuperHero,
-    details: boolean
+    details: boolean,
+    ids: Object,
+    scroll: boolean
 }

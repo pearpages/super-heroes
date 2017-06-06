@@ -1,7 +1,7 @@
 import { SuperHero } from './../../models/super-hero';
 import { HeroesData } from './../../models/heroes-data';
 import { HideDetails } from './../../store/heroes.actions';
-import { HeroesStore } from './../../store/heroes-store';
+import { HeroesStore } from './../../store/heroes.store';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 

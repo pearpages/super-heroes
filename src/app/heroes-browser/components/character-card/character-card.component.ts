@@ -1,5 +1,5 @@
 import { SelectHero } from './../../store/heroes.actions';
-import { HeroesStore } from './../../store/heroes-store';
+import { HeroesStore } from './../../store/heroes.store';
 import { Store } from '@ngrx/store';
 import { SuperHero } from './../../models/super-hero';
 import { Component, OnInit, Input } from '@angular/core';
