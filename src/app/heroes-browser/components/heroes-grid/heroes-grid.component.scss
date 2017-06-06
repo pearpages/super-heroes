@@ -2,7 +2,8 @@
     padding-top: 120px !important;
     height: 100vh;
     overflow: scroll;
+    overflow-x: hidden;
 }
-// .heroes-grid::-webkit-scrollbar {
+// .heroes-grid::-webkit-scrollbar-x {
 //     width: 0px;
 // }

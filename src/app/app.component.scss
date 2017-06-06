@@ -1,6 +1,7 @@
 body {
     background: #EEE;
 }
+
 header {
     position: fixed;
     width: 100%;
@@ -8,8 +9,19 @@ header {
     z-index: 1000;
     box-shadow: #999 0px 3px 5px 1px;
 }
+
 h1.main-title {
     padding: 8px 16px;
     color: #111;
     margin-bottom: 0;
+    background: #d0021b;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(right, #d0021b, #666);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #d0021b, #666);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #d0021b, #666);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #d0021b, #666);
+    /* Standard syntax */
 }

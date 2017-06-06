@@ -1,3 +1,13 @@
+@media (max-width: 732px) {
+    #details-bar {
+        width: 100% !important;
+        margin-right: -737px !important;
+    }
+    #details-bar.ready {
+        margin-right: 0 !important;
+    }
+}
+
 #details-bar {
     position: fixed;
     height: 100%;
@@ -21,8 +31,12 @@
             color: #FFF;
         }
     }
+    #main {
+        overflow: hidden;
+    }
     .wrapper {
         position: relative;
+        height: 100%;
         #close {
             position: absolute;
             top: 0;
@@ -33,8 +47,24 @@
             cursor: pointer;
             color: #ccc;
         }
-        button {
-            color: white;
+        #button-wrapper {
+            position: absolute;
+            bottom: 20px;
+            padding: 0 20px;
+            width: 100%;
+            right: 0px;
+            button {
+                color: white;
+            }
+        }
+        #mini-cards-container {
+            max-height: 50vh;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+        #mini-cards-container::-webkit-scrollbar {
+            background-color: rgba(231, 184, 187, 0.9);
+            outline: 1px solid slategrey;
         }
     }
 }
