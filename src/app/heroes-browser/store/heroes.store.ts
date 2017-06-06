@@ -1,6 +1,11 @@
-import { HeroesData } from './../models/heroes-data';
-import { Hero } from './../models/hero';
+import { SuperHero } from './../models/super-hero';
+import { Query } from './../models/query';
 
 export interface HeroesStore {
-    data: HeroesData
+    list: SuperHero[],
+    query: Query,
+    selected: SuperHero,
+    details: boolean,
+    loading: boolean,
+    moreData: boolean
 }

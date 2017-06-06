@@ -1,4 +1,4 @@
-export interface Hero {
+export interface HeroData {
     comics?: any,
     description: string,
     events: any,

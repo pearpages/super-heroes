@@ -1,13 +1,14 @@
 import { MyCacheService } from './../../services/my-cache.service';
 import { HeroesStore } from './../../store/heroes.store';
 import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import * as actions from '../../store/heroes.actions';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterComponent implements OnInit {
 

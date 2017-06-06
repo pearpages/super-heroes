@@ -3,7 +3,7 @@ import { HeroesStore } from './../../store/heroes.store';
 import { SuperHero } from './../../models/super-hero';
 import { UnselectHero, ShowDetails } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-details-bar',

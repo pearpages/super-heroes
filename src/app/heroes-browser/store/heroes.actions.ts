@@ -1,6 +1,5 @@
 import { Query } from './../models/query';
 import { SuperHero } from './../models/super-hero';
-import { Hero } from './../models/hero';
 import { Action } from '@ngrx/store';
 
 export const ADD_HEROES = '[Heroes Browser] Add Heroes';
@@ -27,7 +26,7 @@ export class UpdateFilter implements Action {
 
 export class SelectHero implements Action {
     readonly type = SELECT_HERO;
-    constructor(public payload: Hero) {}
+    constructor(public payload: SuperHero) {}
 }
 
 export class UnselectHero implements Action {

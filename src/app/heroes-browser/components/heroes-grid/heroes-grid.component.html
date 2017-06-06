@@ -1,4 +1,4 @@
-<div class="heroes-grid p-4" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="onScroll()"
+<div class="heroes-grid p-sm-4" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="onScroll()"
   [scrollWindow]="false">
   <div *ngFor="let hero of heroes; let i = index ">
     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 m-t-1 p-3 pull-left">

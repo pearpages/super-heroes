@@ -1,8 +1,8 @@
+import { SuperHero } from './../../models/super-hero';
+import { HeroesStore } from './../../store/heroes.store';
 import { LoadMore } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';
-import { Hero } from './../../models/hero';
 import { Observable } from 'rxjs/Rx';
-import { HeroesData } from './../../models/heroes-data';
 import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,15 +13,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroesGridComponent implements OnInit {
 
-  heroes: Hero[] = [];
+  heroes: SuperHero[] = [];
 
-  constructor(private _heroes: HeroesService,private _store: Store<HeroesData>) {
-  }
+  constructor(private _heroes: HeroesService, private _store: Store<HeroesStore>) { }
 
   ngOnInit() {
-    this._heroes.getHeroes().subscribe((d) => {
-      this.heroes = d.list;
-     });
+    this._store.select('heroes')
+      .subscribe((d) => {
+        this.heroes = d['list'];
+      });
   }
 
   onScroll() {

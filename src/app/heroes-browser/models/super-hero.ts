@@ -1,5 +1,5 @@
+import { HeroData } from './hero-data';
 import { Comic } from './comic';
-import { Hero } from './hero';
 
 export class SuperHero {
 
@@ -16,7 +16,7 @@ export class SuperHero {
     urls: any[];
     favorite: boolean = true;
 
-    constructor(data: Hero) {
+    constructor(data: HeroData) {
         this.comics = data.comics;
         this.description = data.description;
         this.events = data.events;
