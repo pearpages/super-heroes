@@ -26,27 +26,23 @@ export class HeroesService {
 
     this.heroes$.flatMap((state) => {
       if (state.selected) {
-        console.log('selected');
         const url = state.selected.series.collectionURI;
-        return this._myCache.get(`${url}?apikey=${apikey}`);
+        return this._myCache.get('related', `${url}?apikey=${apikey}`);
       } else {
-        console.log('whatever');
-        return this._myCache.get(`${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
+        return this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
       }
-    }).subscribe((data: any[]) => {
-      if (data.length > 0) {
-        if (!data[0].hasOwnProperty('characters')) {
-          const heroes = data.map(_mapHeroes);
-          this._store.dispatch(new actions.AddHeroes({ heroes }));
-        } else {
-          let res = [];
-          data.forEach((serie) => {
-            serie['characters']['items'].forEach((c) => res.push({ name: c.name, id: parseInt(c.resourceURI.split('/').pop()) }));
-          });
-          console.log(res);
-          this._store.dispatch(new AddRelated(res));
-        }
+    }).subscribe((data: { type: string, data: any }) => {
+      if (data.type === 'characters') {
+        const heroes = data.data.map(_mapHeroes);
+        this._store.dispatch(new actions.AddHeroes({ heroes }));
+      } else {
+        let res = [];
+        data.data.forEach((serie) => {
+          serie['characters']['items'].forEach((c) => res.push({ name: c.name, id: parseInt(c.resourceURI.split('/').pop()) }));
+        });
+        this._store.dispatch(new AddRelated(res));
       }
+
     });
   }
 }

@@ -10,18 +10,21 @@ export class MyCacheService {
 
   constructor(private _http: Http) { }
 
-  get(url: string): Observable<SuperHero[]> {
-    return Observable.fromPromise(localForage.getItem(url))
+  get(type: string,url: string): Observable<{ type: string, data: any }> {
+    const key = type+'-'+url;
+
+    return Observable.fromPromise(localForage.getItem(key))
       .switchMap((res) => {
         if (res === null) {
           return this._http.get(url)
             .switchMap((res: Response) => {
               const data = res.json().data.results;
-              return Observable.fromPromise(localForage.setItem(url, data)).map(() => data);
+              return Observable.fromPromise(localForage.setItem(key, data))
+                .map(() => ({type,data}));
             });
         } else {
           return Observable.create((observer) => {
-            observer.next(res);
+            observer.next({type,data:res});
             observer.complete();
           });
         }
