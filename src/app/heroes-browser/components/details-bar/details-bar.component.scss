@@ -10,6 +10,16 @@
     box-shadow: #333 -5px 2px 15px;
     #image {
         height: 33vh;
+        position: relative;
+        h3 {
+            position: absolute;
+            padding: 8px;
+            font-size: 16px;
+            bottom: 8px;
+            right: 16px;
+            background: #000;
+            color: #FFF;
+        }
     }
     .wrapper {
         position: relative;
@@ -19,6 +29,7 @@
             right: 0;
             padding: 20px;
             font-size: 24px;
+            z-index: 4000;
             cursor: pointer;
             color: #ccc;
         }
@@ -27,6 +38,7 @@
         }
     }
 }
+
 #details-bar.ready {
     margin-right: 0;
 }

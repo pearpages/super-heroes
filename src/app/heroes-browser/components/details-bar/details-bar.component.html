@@ -1,19 +1,18 @@
 <div id="details-bar" [class]="'b-color-3-t '+animate()">
   <div class="wrapper" *ngIf="selected !== undefined">
     <span id="close" (click)="closeBar()" class="fa fa-window-close"></span>
-    <div id="image" [class]="selected.getCssClass()" [style.background-image]="'url('+selected.getThumbnail()+')'"></div>
+    <div id="image" [class]="selected.getCssClass()" [style.background-image]="'url('+selected.getThumbnail()+')'">
+      <h3>{{selected.name}}</h3>
+    </div>
     <div class="p-4">
       <div id="description">
-        <h3>{{selected.name}}</h3>
         <p class="description">{{selected.description ? selected.description : 'No Description Available in the DB.'}}</p>
       </div>
       <div id="related-heroes">
         <h4>Related Heroes</h4>
         <p class="loading" *ngIf="loading()"><span class="fa fa-spinner spin"></span> loading</p>
         <div *ngIf="!loading()">
-          <ul *ngIf="selected.related.length > 0">
-            <li *ngFor="let item of selected.related">{{item.name}}</li>
-          </ul>
+          <app-mini-card *ngFor="let item of selected.related" [related]="item"></app-mini-card>
           <p  *ngIf="selected.related.length === 0">No Information Available in the DB.</p>
         </div>
       </div>

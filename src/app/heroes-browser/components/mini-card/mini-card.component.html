@@ -1,0 +1,5 @@
+<div *ngIf="getImage(related.id)" class="mini-card col-3 pull-left p-1">
+  <div class="image" [style.background-image]="'url('+getImage(related.id)+')'">
+    {{related.name}}
+  </div>
+</div>

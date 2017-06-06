@@ -21,8 +21,11 @@ const url = 'https://gateway.marvel.com:443/v1/public';
 @Injectable()
 export class HeroesService {
   heroes$: Observable<HeroesStore> = this._store.select('heroes');
+  _heroes: HeroesStore;
 
   constructor(private _store: Store<HeroesStore>, private _myCache: MyCacheService) {
+
+    this.heroes$.subscribe((d) => this._heroes = d);
 
     this.heroes$.flatMap((state) => {
       if (state.selected) {
@@ -38,12 +41,24 @@ export class HeroesService {
       } else {
         let res = [];
         data.data.forEach((serie) => {
-          serie['characters']['items'].forEach((c) => res.push({ name: c.name, id: parseInt(c.resourceURI.split('/').pop()) }));
+          serie['characters']['items'].forEach((c) => {
+            const e = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
+            if (!res.find((x) => x.id === e.id)) {
+              res.push(e)
+            }
+          });
         });
         this._store.dispatch(new AddRelated(res));
       }
 
     });
+  }
+
+  getImage(id: number) {
+    const h: SuperHero = this._heroes.all[id];
+    if(h) {
+      return h.getThumbnail();
+    }
   }
 }
 
