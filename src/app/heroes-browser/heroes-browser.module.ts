@@ -12,6 +12,7 @@ import { HeroesGridComponent } from './components/heroes-grid/heroes-grid.compon
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DetailsComponent } from './components/details/details.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { MiniCardComponent } from './mini-card/mini-card.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     HttpModule,
     InfiniteScrollModule
   ],
-  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent, LoadingComponent],
+  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent, LoadingComponent, MiniCardComponent],
   exports: [FilterComponent, HeroesGridComponent,DetailsBarComponent,DetailsComponent, LoadingComponent],
   providers: [HeroesService,MyCacheService]
 })
