@@ -9,6 +9,7 @@ export interface HeroesStore {
     loading: boolean,
     moreData: boolean,
     scrolled: boolean,
+    onlyFavorites: boolean,
     favorites: SuperHero[],
     all: Object
 }

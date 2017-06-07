@@ -2,6 +2,8 @@
 <div>
     <span (click)="removeFilter()" *ngIf="filter.length > 0" class="fa fa-window-close remove-filter"></span>
     <input [value]="filter" (keyup)="updateFilter($event.target.value)" type="text" placeholder="Filter results here..." />
+    <button *ngIf="!isShowingFavorites()" (click)="toggleFavorites()" [class]="getClasses()"><span class="fa fa-star"></span> Favorites</button>
+    <button *ngIf="isShowingFavorites()" (click)="toggleFavorites()" [class]="getClasses()"><span class="fa fa-star-o"></span> Favorites</button>
     <button (click)="clearCache()" class="btn btn-sm btn-default"><span class="fa fa-trash"></span> Clear Cache</button>
 </div>
 </div>

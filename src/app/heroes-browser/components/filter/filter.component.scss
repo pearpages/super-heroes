@@ -17,6 +17,12 @@
         right: 4px;
         top: 8px;
     }
+    .btn-fav {
+        top: -33px;
+    }
+    .btn-fav.active {
+        background-color: #f9ca2c;
+    }
     input {
         background: black;
         color: #BBB;

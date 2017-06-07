@@ -1,6 +1,6 @@
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, ADD_FAVORITES } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -112,6 +112,14 @@ export class HeroesService {
           this._store.dispatch(new AddFavorites(data.data));
         }
       });
+  }
+
+  showFavorites() {
+    this._store.dispatch(new OnlyFavorites());
+  }
+
+  isShowingFavorites(): boolean {
+    return this.state.onlyFavorites;
   }
 
   selectHero(hero?: SuperHero) {

@@ -28,4 +28,21 @@ export class FilterComponent {
   removeFilter() {
     this._heroes.search('');
   }
+
+  toggleFavorites() {
+    if(this.isShowingFavorites()) {
+      this._heroes.search('');
+    } else {
+      this._heroes.showFavorites();
+    }
+
+  }
+
+  getClasses() {
+    return this.isShowingFavorites() ? 'btn-fav active btn btn-sm btn-default' : 'btn-fav btn btn-sm btn-default';
+  }
+
+  isShowingFavorites() {
+    return this._heroes.isShowingFavorites();
+  }
 }
