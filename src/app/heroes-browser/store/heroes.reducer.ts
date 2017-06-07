@@ -54,8 +54,10 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
                 newState = state;
             } else {
                 obj['related'] = action.payload;
+                const selected = SuperHero.clone(state.selected);
+                selected['related'] = action.payload.slice();
                 const all = Object.assign({}, state.all, { [state.selected.id]: obj });
-                newState = Object.assign({}, state, { all: all });
+                newState = Object.assign({}, state, { all, selected});
             }
             break;
         case actions.SHOW_DETAILS:

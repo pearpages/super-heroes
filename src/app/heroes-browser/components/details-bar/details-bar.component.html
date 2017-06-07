@@ -8,7 +8,7 @@
       <div id="description">
         <p class="description">{{selected.description ? selected.description : 'No Description Available in the DB.'}}</p>
       </div>
-      <app-related-heroes [selected]="selected"></app-related-heroes>
+      <app-related-heroes [related]="getRelated()"></app-related-heroes>
       <div id="button-wrapper">
         <button [disabled]="loading() === true" class="btn b-color-1 btn-block" (click)="showDetails()">More Details</button>
       </div>

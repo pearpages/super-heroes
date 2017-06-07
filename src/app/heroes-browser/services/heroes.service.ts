@@ -1,4 +1,5 @@
-import { AddRelated, SelectHero } from './../store/heroes.actions';
+import { Related } from './../models/related';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -50,24 +51,36 @@ export class HeroesService {
   }
 
   _search() {
-     if(this.lastSearch !== undefined) {
-        this.lastSearch.unsubscribe();
-      }
-      this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`).subscribe((data) => this._mapMoreHeroes(data));
+    if (this.lastSearch !== undefined) {
+      this.lastSearch.unsubscribe();
+    }
+    this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`).subscribe((data) => this._mapMoreHeroes(data));
   }
 
   clearCache(): Promise<boolean> {
     return this._myCache.clearCache();
   }
 
-  selectHero(hero: SuperHero) {
-    this._store.dispatch(new SelectHero(hero));
+  showDetails() {
+    this._store.dispatch(new ShowDetails());
+  }
+
+  selectHero(hero?: SuperHero) {
+    if (hero === undefined) {
+      this._store.dispatch(new UnselectHero());
+    } else {
+      this._store.dispatch(new SelectHero(hero));
+      this.getRelated(hero);
+    }
+  }
+
+  getRelated(hero: SuperHero) {
     const url = this.state.selected.series.collectionURI;
     this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: { type: string, data: any }) => {
-      let res = [];
+      let res: Related[] = [];
       data.data.forEach((serie) => {
         serie['characters']['items'].forEach((c) => {
-          const e = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
+          const e: Related = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
           if (!res.find((x) => x.id === e.id)) {
             res.push(e)
           }

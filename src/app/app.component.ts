@@ -8,15 +8,16 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   state: HeroesStore;
 
-  constructor(private _store: Store<HeroesStore>,private _heroes: HeroesService) {
+  constructor(private _store: Store<HeroesStore>, private _heroes: HeroesService) {
     this._store.select('heroes').subscribe((d) => this.state = <HeroesStore>d);
   }
 
   ngOnInit() {
     this._heroes.loadMore();
   }
+
 }

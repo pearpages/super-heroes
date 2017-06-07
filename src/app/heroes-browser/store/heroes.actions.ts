@@ -1,3 +1,4 @@
+import { Related } from './../models/related';
 import { Query } from './../models/query';
 import { SuperHero } from './../models/super-hero';
 import { Action } from '@ngrx/store';
@@ -44,5 +45,5 @@ export class HideDetails implements Action {
 
 export class AddRelated implements Action {
     readonly type = ADD_RELATED;
-    constructor(public payload: {name:string,id:number}[]){}
+    constructor(public payload: Related[]){}
 }

@@ -30,19 +30,24 @@ export class SuperHero {
         this.urls = data.urls;
     }
 
-    getThumbnail():string {
+    getThumbnail(): string {
         return this.thumbnail.path + '.' + this.thumbnail.extension;
     }
 
-    getCssClass():string {
+    getCssClass(): string {
         const path = this.thumbnail.path.split('/');
-        const filename = path[path.length -1];
+        const filename = path[path.length - 1];
         let res = 'image-available';
-        if( filename === 'image_not_available' ){
+        if (filename === 'image_not_available') {
             res = 'image-not-available';
         } else if (filename === '4c002e0305708') {
             res = 'image-not-available2';
         }
         return res;
+    }
+
+    static clone(hero: SuperHero) {
+        const props = Object.assign({}, hero);
+        return new SuperHero(props);
     }
 }

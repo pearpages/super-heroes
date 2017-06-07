@@ -1,41 +1,38 @@
+import { Related } from './../../models/related';
 import { HeroesService } from '../../services/heroes.service';
-import { HeroesStore } from './../../store/heroes.store';
 import { SuperHero } from './../../models/super-hero';
-import { UnselectHero, ShowDetails } from './../../store/heroes.actions';
-import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-details-bar',
   templateUrl: './details-bar.component.html',
-  styleUrls: ['./details-bar.component.scss']
+  styleUrls: ['./details-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailsBarComponent implements OnInit {
+export class DetailsBarComponent {
 
-  selected: SuperHero;
+  @Input() selected: SuperHero = undefined;
 
-  constructor(private _store: Store<HeroesStore>, private _heroes: HeroesService) { }
-
-  ngOnInit() {
-    this._store.select('heroes').subscribe((h) => {
-      setTimeout(() => this.selected = h['selected'], 0);
-    });
-  }
+  constructor(private _heroes: HeroesService) { }
 
   animate(): string {
     return (this.selected) ? 'ready' : '';
   }
 
   closeBar() {
-    this._store.dispatch(new UnselectHero());
+    this._heroes.selectHero();
   }
 
   showDetails() {
-    this._store.dispatch(new ShowDetails());
+    this._heroes.showDetails();
   }
 
   loading(): boolean {
-    return this.selected['related'] === undefined;
+    return this.getRelated() === undefined;
+  }
+
+  getRelated(): Related[] {
+    return (this.selected) ? this.selected['related'] : undefined;
   }
 
 }

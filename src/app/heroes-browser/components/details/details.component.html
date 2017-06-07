@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-sm-4 col-left">
         <img class="img-fluid" [src]="hero.getThumbnail()" alt="">
-        <app-related-heroes [selected]="state.selected"></app-related-heroes>
+        <app-related-heroes [related]="state.selected.related"></app-related-heroes>
         <div class="button-wrapper">
           <button class="btn b-color-1">Save as Favorite</button>
         </div>

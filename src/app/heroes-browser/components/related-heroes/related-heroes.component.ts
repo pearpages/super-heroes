@@ -8,12 +8,12 @@ import { Component, Input } from '@angular/core';
 })
 export class RelatedHeroesComponent {
 
-  @Input() selected: SuperHero;
+  @Input() related: SuperHero[];
 
   constructor() { }
 
   loading(): boolean {
-    return this.selected['related'] === undefined;
+    return this.related === undefined;
   }
 
 }
