@@ -75,8 +75,8 @@ export class HeroesService {
       });
   }
 
-  isFavorite(id: number) {
-    return (this.state.favorites.indexOf(id) !== -1);
+  isFavorite(id: number):boolean {
+    return (this.state.favorites.find( (x) => x.id === id) !== undefined);
   }
 
   saveFavorite(hero: SuperHero) {
@@ -84,8 +84,8 @@ export class HeroesService {
     this._myCache.get(key)
       .switchMap((d: CacheData) => {
         const favorites = d.data || [];
-        if (favorites.length === 0 || favorites.indexOf(hero.id) === -1) {
-          favorites.push(hero.id);
+        if (favorites.length === 0 || favorites.find( (x) => x.id === hero.id) === undefined) {
+          favorites.push(hero);
           return this._myCache.set(key, favorites);
         } else {
           return Observable.create((observer) => { observer.next(d); observer.cmplete(); });
@@ -99,11 +99,12 @@ export class HeroesService {
     const key = 'favorites';
     this._myCache.get(key)
       .switchMap((d: CacheData) => {
-        const favorites = d.data;
-        if (favorites === null || favorites.indexOf(hero.id) === -1) {
+        const favorites = d.data || [];
+        if (favorites.length === 0 || favorites.find( (x) => x.id === hero.id) === undefined) {
           return Observable.create((observer) => { observer.next({ type: 'void', data: null }); observer.complete(); });
         } else {
-          const i = favorites.indexOf(hero.id);
+          const toRemove = favorites.find( (x) => x.id === hero.id);
+          const i = favorites.indexOf(toRemove);
           return this._myCache.set(key, [...favorites.slice(0, i), ...favorites.slice(i+1, favorites.length)]);
         }
       }).subscribe((data: CacheData) => {
