@@ -1,8 +1,6 @@
-import { MyCacheService } from './../../services/my-cache.service';
-import { HeroesStore } from './../../store/heroes.store';
-import { Store } from '@ngrx/store';
+import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import * as actions from '../../store/heroes.actions';
+
 
 @Component({
   selector: 'app-filter',
@@ -12,16 +10,17 @@ import * as actions from '../../store/heroes.actions';
 })
 export class FilterComponent implements OnInit {
 
-  constructor(private _store: Store<HeroesStore>, private _myCache: MyCacheService) { }
+  constructor(private _heroes: HeroesService) { }
 
   ngOnInit() {
   }
 
   updateFilter(value) {
-    this._store.dispatch(new actions.UpdateFilter(value));
+    this._heroes.search(value);
   }
 
   clearCache() {
-    this._myCache.clearCache().then(() => alert('Cache cleared'));
+    this._heroes.clearCache()
+      .then(() => alert('Cache cleared'));
   }
 }

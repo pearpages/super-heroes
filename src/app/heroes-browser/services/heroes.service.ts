@@ -1,4 +1,4 @@
-import { AddRelated } from './../store/heroes.actions';
+import { AddRelated, SelectHero } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -11,69 +11,79 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HeroesStore } from './../store/heroes.store';
 import { Subscription } from 'rxjs/Subscription';
-import * as comics from './comics-response.json';
-
-const _comics: Comic[] = _loadJsonComics();
 
 const apikey = '2ffa799140459e091b3ee3bcb05531e7';
 const url = 'https://gateway.marvel.com:443/v1/public';
 
 @Injectable()
 export class HeroesService {
-  heroes$: Observable<HeroesStore> = this._store.select('heroes');
-  _heroes: HeroesStore;
+
+  state: HeroesStore;
+  lastSearch: Subscription;
 
   constructor(private _store: Store<HeroesStore>, private _myCache: MyCacheService) {
-
-    this.heroes$.subscribe((d) => this._heroes = d);
-
-    this.heroes$.flatMap((state) => {
-      if (state.selected) {
-        const url = state.selected.series.collectionURI;
-        return this._myCache.get('related', `${url}?apikey=${apikey}`);
-      } else {
-        return this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${state.query.getQueryString()}`)
-      }
-    }).subscribe((data: { type: string, data: any }) => {
-      if (data.type === 'characters') {
-        const heroes = data.data.map(_mapHeroes);
-        this._store.dispatch(new actions.AddHeroes({ heroes }));
-      } else {
-        let res = [];
-        data.data.forEach((serie) => {
-          serie['characters']['items'].forEach((c) => {
-            const e = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
-            if (!res.find((x) => x.id === e.id)) {
-              res.push(e)
-            }
-          });
-        });
-        this._store.dispatch(new AddRelated(res));
-      }
-
-    });
+    this._store.select('heroes').subscribe(d => this.state = <HeroesStore>d);
   }
 
   getImage(id: number) {
-    const h: SuperHero = this._heroes.all[id];
-    if(h) {
+    const h: SuperHero = this.state.all[id];
+    if (h) {
       return h.getThumbnail();
     }
   }
 
-  getHero(id: number): SuperHero {
-    return this._heroes.all[id];
+  loadMore() {
+    if (this.state.scrolled === false) {
+      this._store.dispatch(new actions.Scrolled());
+      this._search();
+    }
   }
-}
 
-function _loadJsonComics(): Comic[] {
-  const c = <any>comics;
-  return c.data.results.map(_mapComics);
+  search(value: string) {
+    this._store.dispatch(new actions.UpdateFilter(value));
+    this._search();
+  }
+
+  _mapMoreHeroes(data: { type: string, data: any }) {
+    const heroes = data.data.map(_mapHeroes);
+    this._store.dispatch(new actions.AddHeroes({ heroes }));
+  }
+
+  _search() {
+     if(this.lastSearch !== undefined) {
+        this.lastSearch.unsubscribe();
+      }
+      this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`).subscribe((data) => this._mapMoreHeroes(data));
+  }
+
+  clearCache(): Promise<boolean> {
+    return this._myCache.clearCache();
+  }
+
+  selectHero(hero: SuperHero) {
+    this._store.dispatch(new SelectHero(hero));
+    const url = this.state.selected.series.collectionURI;
+    this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: { type: string, data: any }) => {
+      let res = [];
+      data.data.forEach((serie) => {
+        serie['characters']['items'].forEach((c) => {
+          const e = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
+          if (!res.find((x) => x.id === e.id)) {
+            res.push(e)
+          }
+        });
+      });
+      this._store.dispatch(new AddRelated(res));
+    });
+  }
+
+  getHero(id: number): SuperHero {
+    return this.state.all[id];
+  }
 }
 
 function _mapHeroes(data: HeroData): SuperHero {
   const h: SuperHero = new SuperHero(data);
-  h.comics = _comics;
   return h;
 }
 

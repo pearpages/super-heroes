@@ -9,8 +9,9 @@ const defaultData = {
     query: new Query('', 0),
     selected: undefined,
     details: false,
-    loading: true,
+    loading: false,
     moreData: true,
+    scrolled: false,
     all: {}
 };
 
@@ -25,18 +26,20 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
                     list: [...state.list, ...action.payload.heroes],
                     loading: false,
                     moreData: (action.payload.heroes.length === 50),
-                    all: addHeroes(state, action.payload.heroes)
+                    all: addHeroes(state, action.payload.heroes),
+                    scrolled: false,
+                    query: new Query(state.query.filter, state.query.offset + action.payload.heroes.length)
                 });
             }
             break;
         case actions.UPDATE_FILTER:
             newState = Object.assign({}, state, { moreData: true, loading: true, query: new Query(action.payload, 0), list: [] });
             break;
-        case actions.LOAD_MORE:
+        case actions.SCROLLED:
             if (!state.moreData) {
                 newState = state;
             } else {
-                newState = Object.assign({}, state, { loading: true, query: new Query(state.query.filter, state.query.offset + 50) });
+                newState = Object.assign({}, state, { loading: true, scrolled: true });
             }
             break;
         case actions.SELECT_HERO:

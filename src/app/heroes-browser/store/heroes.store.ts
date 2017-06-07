@@ -8,5 +8,6 @@ export interface HeroesStore {
     details: boolean,
     loading: boolean,
     moreData: boolean,
+    scrolled: boolean,
     all: Object
 }

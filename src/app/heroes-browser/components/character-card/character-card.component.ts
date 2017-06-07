@@ -1,6 +1,4 @@
-import { SelectHero } from './../../store/heroes.actions';
-import { HeroesStore } from './../../store/heroes.store';
-import { Store } from '@ngrx/store';
+import { HeroesService } from './../../services/heroes.service';
 import { SuperHero } from './../../models/super-hero';
 import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 
@@ -15,13 +13,13 @@ export class CharacterCardComponent implements OnInit {
   @Input() hero: SuperHero;
   imageLoaded = false;
 
-  constructor(private _store:Store<HeroesStore>) { }
+  constructor(private _heroes:HeroesService) { }
 
   ngOnInit() {
   }
 
   showDetails(hero: SuperHero) {
-    this._store.dispatch(new SelectHero(hero));
+    this._heroes.selectHero(hero);
   }
 
 }

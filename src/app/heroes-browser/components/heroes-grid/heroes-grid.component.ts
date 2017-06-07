@@ -1,6 +1,5 @@
 import { SuperHero } from './../../models/super-hero';
 import { HeroesStore } from './../../store/heroes.store';
-import { LoadMore } from './../../store/heroes.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { HeroesService } from './../../services/heroes.service';
@@ -22,9 +21,10 @@ export class HeroesGridComponent implements OnInit {
       .subscribe((d) => {
         this.heroes = d['list'];
       });
+    this._heroes.loadMore();
   }
 
   onScroll() {
-    this._store.dispatch(new LoadMore());
+    this._heroes.loadMore();
   }
 }
