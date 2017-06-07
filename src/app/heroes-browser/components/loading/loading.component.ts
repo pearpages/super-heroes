@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
-  loading: boolean;
+  loading: boolean = false;
 
   constructor(private _store: Store<HeroesStore>) { }
 
