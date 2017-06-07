@@ -60,6 +60,10 @@ export class HeroesService {
       return h.getThumbnail();
     }
   }
+
+  getHero(id: number): SuperHero {
+    return this._heroes.all[id];
+  }
 }
 
 function _loadJsonComics(): Comic[] {

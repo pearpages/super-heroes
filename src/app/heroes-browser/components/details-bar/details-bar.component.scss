@@ -63,7 +63,7 @@
             overflow-x: hidden;
         }
         #mini-cards-container::-webkit-scrollbar {
-            background-color: rgba(231, 184, 187, 0.9);
+            background-color: darken(rgba(231, 184, 187, 0.9),10%);
             outline: 1px solid slategrey;
         }
     }
