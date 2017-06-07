@@ -19,4 +19,11 @@ export class CharacterCardComponent {
     this._heroes.selectHero(hero);
   }
 
+  isFavorite():boolean {
+    if(this.hero === undefined) {
+      return false;
+    } else {
+      return this._heroes.isFavorite(this.hero.id);
+    }
+  }
 }

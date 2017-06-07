@@ -11,6 +11,7 @@ export const SHOW_DETAILS = '[Heroes Browser] Show Details';
 export const HIDE_DETAILS = '[Heroes Browser] Hide Details';
 export const SCROLLED = '[Heroes Browser] Scrolled';
 export const ADD_RELATED = '[Heroes Browser] Add Related';
+export const ADD_FAVORITES = '[Heroes Browser] Add Favorites';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
@@ -46,4 +47,9 @@ export class HideDetails implements Action {
 export class AddRelated implements Action {
     readonly type = ADD_RELATED;
     constructor(public payload: Related[]){}
+}
+
+export class AddFavorites implements Action {
+    readonly type = ADD_FAVORITES;
+    constructor(public payload: number[]) {}
 }

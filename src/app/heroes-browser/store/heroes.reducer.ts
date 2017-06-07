@@ -11,6 +11,7 @@ const defaultData = {
     section: 'grid',
     loading: false,
     moreData: true,
+    favorites: [],
     scrolled: false,
     all: {}
 };
@@ -59,6 +60,9 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
                 const all = Object.assign({}, state.all, { [state.selected.id]: obj });
                 newState = Object.assign({}, state, { all, selected});
             }
+            break;
+        case actions.ADD_FAVORITES: // set
+            newState = Object.assign({},state,{favorites : action.payload.slice()});
             break;
         case actions.SHOW_DETAILS:
             newState = Object.assign({}, state, { section: 'details' });

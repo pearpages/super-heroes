@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._heroes.loadMore();
+    this._heroes.loadFavorites().
+      subscribe((data) => this._heroes.loadMore());
   }
 
   getSidebar() {

@@ -2,11 +2,11 @@
   <div class="main">
     <img *ngIf="!imageLoaded" [style.display]="'none'" (load)="imageLoaded=true" [src]="hero.getThumbnail()" />
     <div *ngIf="imageLoaded" [class]="'inner '+hero.getCssClass()" [style.background-image]="'url('+hero.getThumbnail()+')'">
-      <span *ngIf="hero.favorite === true" class="fa fa-star favorite"></span>
+      <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
     </div>
     <div class="inner" *ngIf="!imageLoaded">
       <span class="fa fa-spinner spin image-not-loaded"></span>
-      <span *ngIf="hero.favorite === true" class="fa fa-star favorite"></span>
+      <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
     </div>
   </div>
   <div class="footer">{{hero.name}}</div>

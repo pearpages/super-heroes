@@ -1,6 +1,6 @@
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, ADD_FAVORITES } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -66,8 +66,37 @@ export class HeroesService {
     this._store.dispatch(new ShowDetails());
   }
 
+  loadFavorites(): Observable<CacheData> {
+    return this._myCache.get('favorites')
+      .map((data) => {
+        const favorites = (data.data === null) ? [] : data.data;
+        this._store.dispatch(new AddFavorites(favorites));
+        return data;
+      });
+  }
+
+  isFavorite(id: number) {
+    return (this.state.favorites.indexOf(id) !== -1);
+  }
+
   saveFavorite(hero: SuperHero) {
-    console.log('save favorite');
+    const key = 'favorites';
+    this._myCache.get(key)
+      .switchMap((d: CacheData) => {
+        const favorites = d.data;
+        if (favorites === null) {
+          return this._myCache.set(key, [hero.id]);
+        } else {
+          if (favorites.indexOf(hero.id) === -1) {
+            favorites.push(hero.id);
+            return this._myCache.set(key,favorites);
+          } else {
+            return Observable.create((observer) => { observer.next(d); observer.cmplete(); });
+          }
+        }
+      }).subscribe((data: CacheData) => {
+        this._store.dispatch(new AddFavorites(data.data));
+      });
   }
 
   selectHero(hero?: SuperHero) {
