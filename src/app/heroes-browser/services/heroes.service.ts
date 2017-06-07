@@ -1,4 +1,5 @@
 import { Related } from './../models/related';
+import { CacheData } from './../models/cache-data';
 import { AddRelated, SelectHero, UnselectHero, ShowDetails } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
@@ -45,7 +46,7 @@ export class HeroesService {
     this._search();
   }
 
-  _mapMoreHeroes(data: { type: string, data: any }) {
+  _mapMoreHeroes(data: CacheData) {
     const heroes = data.data.map(_mapHeroes);
     this._store.dispatch(new actions.AddHeroes({ heroes }));
   }
@@ -74,19 +75,17 @@ export class HeroesService {
     }
   }
 
+  selectHeroById(id: number) {
+    const hero = this.state.all[id];
+    this._store.dispatch(new SelectHero(hero));
+    this.getRelated(hero);
+  }
+
   getRelated(hero: SuperHero) {
     const url = this.state.selected.series.collectionURI;
-    this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: { type: string, data: any }) => {
-      let res: Related[] = [];
-      data.data.forEach((serie) => {
-        serie['characters']['items'].forEach((c) => {
-          const e: Related = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
-          if (!res.find((x) => x.id === e.id)) {
-            res.push(e)
-          }
-        });
-      });
-      this._store.dispatch(new AddRelated(res));
+    this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: CacheData) => {
+      const related = _mapRelated(data);
+      this._store.dispatch(new AddRelated(related));
     });
   }
 
@@ -102,4 +101,17 @@ function _mapHeroes(data: HeroData): SuperHero {
 
 function _mapComics(data: ComicInterface): Comic {
   return new Comic(data);
+}
+
+function _mapRelated(data: CacheData): Related[] {
+  let res: Related[] = [];
+  data.data.forEach((serie) => {
+    serie['characters']['items'].forEach((c) => {
+      const e: Related = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
+      if (!res.find((x) => x.id === e.id)) {
+        res.push(e)
+      }
+    });
+  });
+  return res;
 }

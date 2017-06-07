@@ -1,4 +1,5 @@
 import { SuperHero } from './../models/super-hero';
+import { CacheData } from './../models/cache-data';
 import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -10,7 +11,7 @@ export class MyCacheService {
 
   constructor(private _http: Http) { }
 
-  get(type: string,url: string): Observable<{ type: string, data: any }> {
+  get(type: string,url: string): Observable<CacheData> {
     const key = type+'-'+url;
 
     return Observable.fromPromise(localForage.getItem(key))
