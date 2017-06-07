@@ -1,6 +1,7 @@
 <div class="heroes-filter">
 <div>
-    <input (keyup)="updateFilter($event.target.value)" type="text" placeholder="Filter results here..." />
+    <span (click)="removeFilter()" *ngIf="filter.length > 0" class="fa fa-window-close remove-filter"></span>
+    <input [value]="filter" (keyup)="updateFilter($event.target.value)" type="text" placeholder="Filter results here..." />
     <button (click)="clearCache()" class="btn btn-sm btn-default">Clear Cache</button>
 </div>
 </div>

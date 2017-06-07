@@ -1,3 +1,5 @@
+import { HeroesStore } from './../../store/heroes.store';
+import { Store } from '@ngrx/store';
 import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
@@ -10,9 +12,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class FilterComponent implements OnInit {
 
-  constructor(private _heroes: HeroesService) { }
+  filter: string = '';
+
+  constructor(private _heroes: HeroesService, private _store: Store<HeroesStore>) {}
 
   ngOnInit() {
+    this._store.select('heroes')
+      .subscribe((d) => this.filter = d['query']['filter']);
+
   }
 
   updateFilter(value) {
@@ -22,5 +29,9 @@ export class FilterComponent implements OnInit {
   clearCache() {
     this._heroes.clearCache()
       .then(() => alert('Cache cleared'));
+  }
+
+  removeFilter() {
+    this._heroes.search('');
   }
 }

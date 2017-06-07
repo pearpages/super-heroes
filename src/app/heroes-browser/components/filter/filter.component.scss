@@ -3,6 +3,14 @@
     background: black;
     color: white;
     position: relative;
+    .remove-filter {
+        position: relative;
+        top: 2px;
+        left: 12px;
+        cursor: pointer;
+        font-size: 20px;
+        color: white;
+    }
     .btn {
         cursor: pointer;
         position: absolute;
@@ -14,7 +22,8 @@
         color: #BBB;
         text-indent: 14px;
         border: none;
-        width: 100%;
+        display: inline-block;
+        width: 90%;
     }
     input:focus {
         outline: none;
