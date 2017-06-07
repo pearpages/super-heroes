@@ -22,12 +22,24 @@ export class DetailsComponent {
     this._heroes.saveFavorite(this.selected);
   }
 
+  removeFavorite() {
+    this._heroes.removeFavorite(this.selected);
+  }
+
   getDetails() {
-    if(this.selected) {
+    if (this.selected) {
       if (this.selected['related'] !== undefined) {
         return this.selected['related'];
       }
     }
     return undefined;
+  }
+
+  isFavorite() {
+    if (this.selected === undefined) {
+      return false;
+    } else {
+      return this._heroes.isFavorite(this.selected.id);
+    }
   }
 }

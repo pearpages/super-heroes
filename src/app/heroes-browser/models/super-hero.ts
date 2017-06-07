@@ -1,9 +1,11 @@
+import { Related } from './related';
 import { HeroData } from './hero-data';
 import { Comic } from './comic';
 
 export class SuperHero {
 
     comics?: Comic[];
+    related?: Related[];
     description: string;
     events: any;
     id: number;
@@ -14,7 +16,6 @@ export class SuperHero {
     stories: any;
     thumbnail: any;
     urls: any[];
-    favorite: boolean = false;
 
     constructor(data: HeroData) {
         this.comics = data.comics;

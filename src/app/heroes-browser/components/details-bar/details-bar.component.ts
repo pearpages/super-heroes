@@ -35,4 +35,12 @@ export class DetailsBarComponent {
     return (this.selected) ? this.selected['related'] : undefined;
   }
 
+  isFavorite() {
+    if(this.selected === undefined) {
+      return false;
+    } else {
+      return this._heroes.isFavorite(this.selected.id);
+    }
+  }
+
 }

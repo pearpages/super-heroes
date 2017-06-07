@@ -25,6 +25,7 @@
         top: 0;
         z-index: 2500;
         height: 100%;
+        width: 100%;
         padding-top: 80px !important;
         .row {
             height: 100%;
@@ -33,10 +34,16 @@
                 position: relative;
             }
             .col-left {
+                .favorite {
+                    position: absolute;
+                    padding: 20px;
+                    font-size: 50px;
+                    text-shadow: 0px 0px 6px #000;
+                }
                 .button-wrapper {
                     position: absolute;
                     left: 0;
-                    bottom: 20px;
+                    bottom: 30px;
                     width: 100%;
                     padding: 0 20px;
                     button {

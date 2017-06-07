@@ -83,19 +83,33 @@ export class HeroesService {
     const key = 'favorites';
     this._myCache.get(key)
       .switchMap((d: CacheData) => {
-        const favorites = d.data;
-        if (favorites === null) {
-          return this._myCache.set(key, [hero.id]);
+        const favorites = d.data || [];
+        if (favorites.length === 0 || favorites.indexOf(hero.id) === -1) {
+          favorites.push(hero.id);
+          return this._myCache.set(key, favorites);
         } else {
-          if (favorites.indexOf(hero.id) === -1) {
-            favorites.push(hero.id);
-            return this._myCache.set(key,favorites);
-          } else {
-            return Observable.create((observer) => { observer.next(d); observer.cmplete(); });
-          }
+          return Observable.create((observer) => { observer.next(d); observer.cmplete(); });
         }
       }).subscribe((data: CacheData) => {
         this._store.dispatch(new AddFavorites(data.data));
+      });
+  }
+
+  removeFavorite(hero: SuperHero) {
+    const key = 'favorites';
+    this._myCache.get(key)
+      .switchMap((d: CacheData) => {
+        const favorites = d.data;
+        if (favorites === null || favorites.indexOf(hero.id) === -1) {
+          return Observable.create((observer) => { observer.next({ type: 'void', data: null }); observer.complete(); });
+        } else {
+          const i = favorites.indexOf(hero.id);
+          return this._myCache.set(key, [...favorites.slice(0, i), ...favorites.slice(i+1, favorites.length)]);
+        }
+      }).subscribe((data: CacheData) => {
+        if (data.type !== 'void') {
+          this._store.dispatch(new AddFavorites(data.data));
+        }
       });
   }
 

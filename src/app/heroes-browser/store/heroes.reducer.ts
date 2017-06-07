@@ -62,7 +62,12 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             }
             break;
         case actions.ADD_FAVORITES: // set
-            newState = Object.assign({},state,{favorites : action.payload.slice()});
+            const newList = state.list.map((hero) => SuperHero.clone(hero));
+            const selected = SuperHero.clone(state.selected);
+            if(state.selected){
+                selected['related'] = state.selected['related'];
+            }
+            newState = Object.assign({},state,{favorites : action.payload.slice(), list: newList, selected: selected});
             break;
         case actions.SHOW_DETAILS:
             newState = Object.assign({}, state, { section: 'details' });

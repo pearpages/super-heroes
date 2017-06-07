@@ -18,6 +18,11 @@
     margin-right: -505px;
     transition: margin-right 300ms;
     box-shadow: #333 -5px 2px 15px;
+    .favorite {
+        padding: 20px;
+        font-size: 50px;
+        text-shadow: 0px 0px 6px #000;
+    }
     #image {
         height: 33vh;
         position: relative;
@@ -49,7 +54,7 @@
         }
         #button-wrapper {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             padding: 0 20px;
             width: 100%;
             right: 0px;
