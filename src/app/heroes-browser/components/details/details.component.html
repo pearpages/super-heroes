@@ -1,6 +1,8 @@
 <div id="details" class="b-color-3" *ngIf="state.details === true">
-  <header class="b-color-1">
-    <button (click)="closeDetails()">Back</button>
+  <header>
+    <h1 class="main-title">
+      <span id="back" (click)="closeDetails()">Back</span>
+    </h1>
     <div class="separator b-color-2"></div>
   </header>
   <div class="main p-5">
@@ -14,9 +16,9 @@
         <h2>{{hero.name}}</h2>
         <div class="description">{{hero.description}}</div>
         <h3>Comics</h3>
-        <div *ngFor="let item of hero.comics" style="float:left">
+        <!--<div *ngFor="let item of hero.comics" style="float:left">
           <img [width]="'75'" [src]="item.getThumbnail()" alt="">
-        </div>
+        </div>-->
         <hr style="clear:left">
         <h3>Also appears in...</h3>
         <pre style="overflow: scroll; height: 500px"></pre>

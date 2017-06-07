@@ -4,6 +4,12 @@
     width: 100%;
     height: 100%;
     z-index: 3000;
+    span#back {
+        cursor: pointer;
+    }
+    span#back:hover {
+        text-decoration: underline;
+    }
     .separator {
         height: 8px;
     }
