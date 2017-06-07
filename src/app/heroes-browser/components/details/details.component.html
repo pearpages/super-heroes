@@ -5,14 +5,16 @@
     </h1>
     <div class="separator b-color-2"></div>
   </header>
-  <div class="main p-5">
+  <div class="main pt-0 pl-4 pr-4">
     <div class="row">
-      <div class="col-md-4">
-        <img [width]="300" [src]="hero.getThumbnail()" alt="">
-        <h6>Related Heroes</h6>
-        <button class="btn b-color-1">Save as Favorite</button>
+      <div class="col-sm-4 col-left">
+        <img class="img-fluid" [src]="hero.getThumbnail()" alt="">
+        <app-related-heroes [selected]="state.selected"></app-related-heroes>
+        <div class="button-wrapper">
+          <button class="btn b-color-1">Save as Favorite</button>
+        </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-sm-8 col-right">
         <h2>{{hero.name}}</h2>
         <div class="description">{{hero.description}}</div>
         <h3>Comics</h3>

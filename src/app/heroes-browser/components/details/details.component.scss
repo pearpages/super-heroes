@@ -4,13 +4,46 @@
     width: 100%;
     height: 100%;
     z-index: 3000;
-    span#back {
-        cursor: pointer;
+    header {
+        position: absolute;
+        z-index: 3500;
+        width: 100%;
+        height: 80px;
+        span#back {
+            cursor: pointer;
+            z-index: 3500;
+        }
+        span#back:hover {
+            text-decoration: underline;
+        }
+        .separator {
+            height: 8px;
+        }
     }
-    span#back:hover {
-        text-decoration: underline;
-    }
-    .separator {
-        height: 8px;
+    .main {
+        position: absolute;
+        top: 0;
+        z-index: 2500;
+        height: 100%;
+        padding-top: 80px !important;
+        .row {
+            height: 100%;
+            .col-left,
+            .col-right {
+                position: relative;
+            }
+            .col-left {
+                .button-wrapper {
+                    position: absolute;
+                    left: 0;
+                    bottom: 20px;
+                    width: 100%;
+                    padding: 0 20px;
+                    button {
+                        width: 100%;
+                    }
+                }
+            }
+        }
     }
 }

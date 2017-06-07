@@ -1,0 +1,11 @@
+#related-heroes {
+    #mini-cards-container {
+        max-height: 50vh;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    #mini-cards-container::-webkit-scrollbar {
+        background-color: darken(rgba(231, 184, 187, 0.9), 10%);
+        outline: 1px solid slategrey;
+    }
+}
