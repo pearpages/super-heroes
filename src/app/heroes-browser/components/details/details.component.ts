@@ -17,4 +17,17 @@ export class DetailsComponent {
   closeDetails() {
     this._heroes.hideDetails();
   }
+
+  saveFavorite() {
+    this._heroes.saveFavorite(this.selected);
+  }
+
+  getDetails() {
+    if(this.selected) {
+      if (this.selected['related'] !== undefined) {
+        return this.selected['related'];
+      }
+    }
+    return undefined;
+  }
 }

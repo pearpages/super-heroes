@@ -34,6 +34,10 @@ $fa-font-path: '../node_modules/font-awesome/fonts';
     }
 }
 
+body {
+    background: #DDD !important;
+}
+
 .spin {
     animation: spin 1000ms linear infinite;
 }

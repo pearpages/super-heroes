@@ -66,6 +66,10 @@ export class HeroesService {
     this._store.dispatch(new ShowDetails());
   }
 
+  saveFavorite(hero: SuperHero) {
+    console.log('save favorite');
+  }
+
   selectHero(hero?: SuperHero) {
     if (hero === undefined) {
       this._store.dispatch(new UnselectHero());

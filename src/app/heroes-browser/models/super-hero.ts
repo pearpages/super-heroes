@@ -14,7 +14,7 @@ export class SuperHero {
     stories: any;
     thumbnail: any;
     urls: any[];
-    favorite: boolean = true;
+    favorite: boolean = false;
 
     constructor(data: HeroData) {
         this.comics = data.comics;
