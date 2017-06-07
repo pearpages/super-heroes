@@ -1,7 +1,7 @@
 import { HeroesStore } from './../../store/heroes.store';
 import { Store } from '@ngrx/store';
 import { HeroesService } from './../../services/heroes.service';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 
 @Component({
@@ -10,17 +10,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
 
-  filter: string = '';
+  @Input() filter: string = '';
 
-  constructor(private _heroes: HeroesService, private _store: Store<HeroesStore>) {}
-
-  ngOnInit() {
-    this._store.select('heroes')
-      .subscribe((d) => this.filter = d['query']['filter']);
-
-  }
+  constructor(private _heroes: HeroesService) {}
 
   updateFilter(value) {
     this._heroes.search(value);

@@ -1,6 +1,6 @@
 <header>
     <h1 class="main-title b-color-1">Marvel Heroes</h1>
-    <app-filter></app-filter>
+    <app-filter [filter]="state.query.filter"></app-filter>
 </header>
 <app-heroes-grid [heroes]="state.list"></app-heroes-grid>
 <app-details-bar></app-details-bar>
