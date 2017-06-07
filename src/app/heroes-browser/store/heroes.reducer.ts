@@ -8,7 +8,7 @@ const defaultData = {
     list: [],
     query: new Query('', 0),
     selected: undefined,
-    details: false,
+    section: 'grid',
     loading: false,
     moreData: true,
     scrolled: false,
@@ -43,10 +43,10 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             }
             break;
         case actions.SELECT_HERO:
-            newState = Object.assign({}, state, { selected: action.payload });
+            newState = Object.assign({}, state, { selected: action.payload, section: 'sidebar' });
             break;
         case actions.UNSELECT_HERO:
-            newState = Object.assign({}, state, { selected: undefined });
+            newState = Object.assign({}, state, { selected: undefined, section: 'grid' });
             break;
         case actions.ADD_RELATED:
             const obj = state.all[state.selected.id];
@@ -61,10 +61,10 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             }
             break;
         case actions.SHOW_DETAILS:
-            newState = Object.assign({}, state, { details: true });
+            newState = Object.assign({}, state, { section: 'details' });
             break;
         case actions.HIDE_DETAILS:
-            newState = Object.assign({}, state, { details: false });
+            newState = Object.assign({}, state, { section: 'grid' });
             break;
         default:
             newState = state;

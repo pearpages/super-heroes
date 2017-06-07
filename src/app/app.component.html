@@ -3,6 +3,6 @@
     <app-filter [filter]="state.query.filter"></app-filter>
 </header>
 <app-heroes-grid [heroes]="state.list"></app-heroes-grid>
-<app-details-bar [selected]="state.selected" ></app-details-bar>
-<app-details></app-details>
+<app-details-bar [selected]="getSidebar()"></app-details-bar>
+<app-details [selected]="getDetails()"></app-details>
 <app-loading [loading]="state.loading"></app-loading>

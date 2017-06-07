@@ -20,4 +20,11 @@ export class AppComponent implements OnInit {
     this._heroes.loadMore();
   }
 
+  getSidebar() {
+    return (this.state.section === 'sidebar') ? this.state.selected : undefined;
+  }
+
+  getDetails() {
+    return (this.state.section === 'details') ? this.state.selected : undefined;
+  }
 }

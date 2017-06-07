@@ -5,7 +5,7 @@ export interface HeroesStore {
     list: SuperHero[],
     query: Query,
     selected: SuperHero,
-    details: boolean,
+    section: string,
     loading: boolean,
     moreData: boolean,
     scrolled: boolean,

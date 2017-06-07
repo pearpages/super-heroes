@@ -1,30 +1,35 @@
-<div id="details" class="b-color-3" *ngIf="state.details === true">
+<div id="details" class="b-color-3" *ngIf="selected">
+
   <header>
     <h1 class="main-title">
       <span id="back" (click)="closeDetails()">Back</span>
     </h1>
     <div class="separator b-color-2"></div>
   </header>
+
   <div class="main pt-0 pl-4 pr-4">
     <div class="row">
+
       <div class="col-sm-4 col-left">
-        <img class="img-fluid" [src]="hero.getThumbnail()" alt="">
-        <app-related-heroes [related]="state.selected.related"></app-related-heroes>
+        <img class="img-fluid" [src]="selected.getThumbnail()" alt="">
+        <!--<app-related-heroes [related]="state.selected.related"></app-related-heroes>-->
         <div class="button-wrapper">
           <button class="btn b-color-1">Save as Favorite</button>
         </div>
       </div>
+
       <div class="col-sm-8 col-right">
-        <h2>{{hero.name}}</h2>
-        <div class="description">{{hero.description}}</div>
+        <h2>{{selected.name}}</h2>
+        <div class="description">{{selected.description}}</div>
         <h3>Comics</h3>
-        <!--<div *ngFor="let item of hero.comics" style="float:left">
+        <!--<div *ngFor="let item of selected.comics" style="float:left">
           <img [width]="'75'" [src]="item.getThumbnail()" alt="">
         </div>-->
         <hr style="clear:left">
         <h3>Also appears in...</h3>
         <pre style="overflow: scroll; height: 500px"></pre>
       </div>
+
     </div>
   </div>
 </div>

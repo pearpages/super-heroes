@@ -1,6 +1,6 @@
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -87,6 +87,10 @@ export class HeroesService {
       const related = _mapRelated(data);
       this._store.dispatch(new AddRelated(related));
     });
+  }
+
+  hideDetails() {
+    this._store.dispatch(new HideDetails());
   }
 
   getHero(id: number): SuperHero {
