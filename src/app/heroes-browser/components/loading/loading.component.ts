@@ -1,20 +1,17 @@
 import { Store } from '@ngrx/store';
 import { HeroesStore } from './../../store/heroes.store';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input,ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss']
+  styleUrls: ['./loading.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent {
 
-  loading: boolean = false;
+  @Input() loading: boolean = false;
 
-  constructor(private _store: Store<HeroesStore>) { }
-
-  ngOnInit() {
-    this._store.select('heroes').subscribe((d) => this.loading = d['loading']);
-  }
+  constructor() { }
 
 }

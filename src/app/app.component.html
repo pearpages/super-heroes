@@ -2,7 +2,7 @@
     <h1 class="main-title b-color-1">Marvel Heroes</h1>
     <app-filter></app-filter>
 </header>
-<app-heroes-grid ></app-heroes-grid>
+<app-heroes-grid [heroes]="state.list"></app-heroes-grid>
 <app-details-bar></app-details-bar>
 <app-details></app-details>
-<app-loading></app-loading>
+<app-loading [loading]="state.loading"></app-loading>
