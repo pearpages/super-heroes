@@ -55,15 +55,11 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             break;
         case actions.ADD_RELATED:
             const obj = state.all[state.selected.id];
-            if (obj['related']) {
-                newState = state;
-            } else {
-                obj['related'] = action.payload;
-                const selected = SuperHero.clone(state.selected);
-                selected['related'] = action.payload.slice();
-                const all = Object.assign({}, state.all, { [state.selected.id]: obj });
-                newState = Object.assign({}, state, { all, selected });
-            }
+            obj['related'] = action.payload;
+            const selected1 = SuperHero.clone(state.selected);
+            selected1['related'] = action.payload.slice();
+            const all = Object.assign({}, state.all, { [state.selected.id]: obj });
+            newState = Object.assign({}, state, { all, selected: selected1 });
             break;
         case actions.ADD_FAVORITES: // set
             const newList = state.list.map((hero) => SuperHero.clone(hero));
