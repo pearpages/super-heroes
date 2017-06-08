@@ -16,34 +16,25 @@
         }
     }
     .main {
-
-        top: 0;
-        .row {
-            .col-left,
-            .col-right {
-                position: relative;
+        .col-left {
+            .favorite {
+                padding: 20px;
+                font-size: 50px;
+                text-shadow: 0px 0px 6px #000;
             }
-            .col-left {
-                .favorite {
-
-                    padding: 20px;
-                    font-size: 50px;
-                    text-shadow: 0px 0px 6px #000;
-                }
-                .image-container {
-                    min-height: 30vh;
+            .image-container {
+                min-height: 30vh;
+                width: 100%;
+                background: center center;
+                background-size: cover;
+                margin-bottom: 20px;
+            }
+            .button-wrapper {
+                margin: 20px 0;
+                width: 100%;
+                padding: 0 20px;
+                button {
                     width: 100%;
-                    background: center center;
-                    background-size: cover;
-                    margin-bottom: 20px;
-                }
-                .button-wrapper {
-                    margin-top: 20px;
-                    width: 100%;
-                    padding: 0 20px;
-                    button {
-                        width: 100%;
-                    }
                 }
             }
         }

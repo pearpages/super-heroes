@@ -8,31 +8,29 @@
   </header>
 
   <div class="main pt-0 pl-4 pr-4">
-    <div class="row">
 
-      <div class="col-sm-4 col-left">
-        <div class="image-container" [style.background-image]="'url('+selected.getThumbnail()+')'">
-          <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
-        </div>
-        <app-related-heroes [related]="getDetails()"></app-related-heroes>
-        <div class="button-wrapper">
-          <button *ngIf="!isFavorite()" class="btn b-color-1" (click)="saveFavorite()"><span class="fa fa-star"></span> Save as Favorite</button>
-          <button *ngIf="isFavorite()" class="btn b-color-1" (click)="removeFavorite()"><span class="fa fa-star-o"></span> Remove as Favorite</button>
-        </div>
-      </div>
-
-      <div class="col-sm-8 col-right">
-        <h2>{{selected.name}}</h2>
-        <div class="description">{{selected.description}}</div>
-        <h3>Comics</h3>
-        <!--<div *ngFor="let item of selected.comics" style="float:left">
+    <div class="col-sm-7 col-md-8 col-right float-sm-right">
+      <h2>{{selected.name}}</h2>
+      <div class="description">{{selected.description}}</div>
+      <h3>Comics</h3>
+      <!--<div *ngFor="let item of selected.comics" style="float:left">
           <img [width]="'75'" [src]="item.getThumbnail()" alt="">
         </div>-->
-        <hr style="clear:left">
-        <h3>Also appears in...</h3>
-        <pre style="overflow: scroll; height: 500px"></pre>
-      </div>
-
+      <hr style="clear:left">
+      <h3>Also appears in...</h3>
+      <pre style="overflow: scroll; height: 500px"></pre>
     </div>
+
+    <div class="col-sm-5 col-md-4 col-left float-sm-left">
+      <div class="image-container" [style.background-image]="'url('+selected.getThumbnail()+')'">
+        <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
+      </div>
+      <app-related-heroes [related]="getDetails()"></app-related-heroes>
+      <div class="button-wrapper">
+        <button *ngIf="!isFavorite()" class="btn b-color-1" (click)="saveFavorite()"><span class="fa fa-star"></span> Save as Favorite</button>
+        <button *ngIf="isFavorite()" class="btn b-color-1" (click)="removeFavorite()"><span class="fa fa-star-o"></span> Remove as Favorite</button>
+      </div>
+    </div>
+
   </div>
 </div>
