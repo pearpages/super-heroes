@@ -152,12 +152,13 @@ export class HeroesService {
 
   getRelated(hero: SuperHero) {
     const url = this.state.selected.series.collectionURI;
-    this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: CacheData) => {
-      const related = this._mapRelated(data).subscribe((related: Related[]) => {
-        this._store.dispatch(new AddRelated(related));
+    this._myCache.get('related', `${url}?apikey=${apikey}`)
+      .subscribe((data: CacheData) => {
+        this._mapRelated(data)
+          .subscribe((related: Related[]) => {
+            this._store.dispatch(new AddRelated(related));
+        });
       });
-
-    });
   }
 
   _mapRelated(data: CacheData): Observable<Related[]> {
@@ -175,16 +176,16 @@ export class HeroesService {
         }
       });
     });
-    if(observables) {
+    if (observables.length > 0) {
       return Observable.combineLatest(...observables)
-      .map((res: CacheData[]) => {
-        const heroes = res.map(data => {
-          return new SuperHero(data.data[0]);
-        });
-        this._store.dispatch(new AddAll(heroes));
-        return true;
-      })
-      .map(() => res);
+        .map((res: CacheData[]) => {
+          const heroes = res.map(data => {
+            return new SuperHero(data.data[0]);
+          });
+          this._store.dispatch(new AddAll(heroes));
+          return true;
+        })
+        .map(() => res);
     } else {
       return _makeDummyObservable(res);
     }
