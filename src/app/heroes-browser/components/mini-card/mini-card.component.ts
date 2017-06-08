@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs/Rx';
 import { HeroesService } from './../../services/heroes.service';
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-mini-card',
@@ -7,14 +8,17 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./mini-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MiniCardComponent{
+export class MiniCardComponent implements OnInit{
 
-  @Input() related: {id:string,name: string};
+  @Input() related: {id:number,name: string};
+  image: string;
 
   constructor(private _heroes: HeroesService) { }
 
-  getImage(id:number) {
-    return this._heroes.getImage(id);
+  ngOnInit() {
+    this._heroes.getImage(this.related.id).subscribe((image) => {
+      this.image = image;
+    });
   }
 
   select(id: number) {

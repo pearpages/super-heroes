@@ -23,8 +23,17 @@
         font-size: 50px;
         text-shadow: 0px 0px 6px #000;
     }
+    #image.image-not-available {
+        background: #CCC bottom left;
+        background-size: cover;
+    }
+    #image.image-not-available2 {
+        background: #CCC bottom right;
+        background-size: cover;
+    }
     #image {
-        height: 33vh;
+        height: 25vh;
+        background-position: center -40px;
         position: relative;
         h3 {
             position: absolute;
@@ -38,6 +47,9 @@
     }
     #main {
         overflow: hidden;
+        .description {
+            min-height: 120px;
+        }
     }
     .wrapper {
         position: relative;

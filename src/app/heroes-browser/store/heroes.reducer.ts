@@ -37,6 +37,15 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
         case actions.UPDATE_FILTER:
             newState = Object.assign({}, state, { onlyFavorites: false, moreData: true, loading: true, query: new Query(action.payload, 0), list: [] });
             break;
+        case actions.ADD_ALL:
+            const newAll = Object.assign({},state.all);
+            action.payload.forEach(hero => {
+                if(newAll[hero.id] === undefined) {
+                    newAll[hero.id] = hero;
+                }
+            })
+            newState = Object.assign({},state,{all: newAll});
+            break;
         case actions.SCROLLED:
             if (!state.moreData) {
                 newState = state;

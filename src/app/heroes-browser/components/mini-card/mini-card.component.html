@@ -1,5 +1,5 @@
-<div *ngIf="getImage(related.id)" class="mini-card col-3 pull-left p-1">
-  <div (click)="select(related.id)" class="image" [style.background-image]="'url('+getImage(related.id)+')'">
+<div *ngIf="image" class="mini-card col-3 pull-left p-1">
+  <div (click)="select(related.id)" class="image" [style.background-image]="'url('+image+')'">
     <div class="wrapper p-1">
       <div class="name">{{related.name}}</div>
     </div>

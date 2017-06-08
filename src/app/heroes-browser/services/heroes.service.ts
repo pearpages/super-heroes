@@ -1,6 +1,6 @@
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites, AddAll } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -27,11 +27,23 @@ export class HeroesService {
     this._store.select('heroes').subscribe(d => this.state = <HeroesStore>d);
   }
 
-  getImage(id: number) {
+  getImage(id: number): Observable<string> {
     const h: SuperHero = this.state.all[id];
     if (h) {
-      return h.getThumbnail();
+      return Observable.create((observer) => {
+        observer.next(h.getThumbnail());
+        observer.complete();
+      });
+    } else {
+      return this._getCharacter(id)
+        .map((data) => {
+          return data.data[0].thumbnail.path + '.' + data.data[0].thumbnail.extension;
+        });
     }
+  }
+
+  _getCharacter(id: number): Observable<CacheData> {
+    return this._myCache.get('character', `${url}/characters/${id}?apikey=${apikey}`);
   }
 
   loadMore() {
@@ -76,8 +88,8 @@ export class HeroesService {
       });
   }
 
-  isFavorite(id: number):boolean {
-    return (this.state.favorites.find( (x) => x.id === id) !== undefined);
+  isFavorite(id: number): boolean {
+    return (this.state.favorites.find((x) => x.id === id) !== undefined);
   }
 
   saveFavorite(hero: SuperHero) {
@@ -85,7 +97,7 @@ export class HeroesService {
     this._myCache.get(key)
       .switchMap((d: CacheData) => {
         const favorites = d.data || [];
-        if (favorites.length === 0 || favorites.find( (x) => x.id === hero.id) === undefined) {
+        if (favorites.length === 0 || favorites.find((x) => x.id === hero.id) === undefined) {
           favorites.push(hero);
           return this._myCache.set(key, favorites);
         } else {
@@ -101,12 +113,12 @@ export class HeroesService {
     this._myCache.get(key)
       .switchMap((d: CacheData) => {
         const favorites = d.data || [];
-        if (favorites.length === 0 || favorites.find( (x) => x.id === hero.id) === undefined) {
+        if (favorites.length === 0 || favorites.find((x) => x.id === hero.id) === undefined) {
           return Observable.create((observer) => { observer.next({ type: 'void', data: null }); observer.complete(); });
         } else {
-          const toRemove = favorites.find( (x) => x.id === hero.id);
+          const toRemove = favorites.find((x) => x.id === hero.id);
           const i = favorites.indexOf(toRemove);
-          return this._myCache.set(key, [...favorites.slice(0, i), ...favorites.slice(i+1, favorites.length)]);
+          return this._myCache.set(key, [...favorites.slice(0, i), ...favorites.slice(i + 1, favorites.length)]);
         }
       }).subscribe((data: CacheData) => {
         if (data.type !== 'void') {
@@ -141,9 +153,42 @@ export class HeroesService {
   getRelated(hero: SuperHero) {
     const url = this.state.selected.series.collectionURI;
     this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: CacheData) => {
-      const related = _mapRelated(data,this.state);
-      this._store.dispatch(new AddRelated(related));
+      const related = this._mapRelated(data).subscribe((related: Related[]) => {
+        this._store.dispatch(new AddRelated(related));
+      });
+
     });
+  }
+
+  _mapRelated(data: CacheData): Observable<Related[]> {
+    let res: Related[] = [];
+    let observables: Observable<any>[] = [];
+    data.data.forEach((serie) => {
+      serie['characters']['items'].forEach((c) => {
+        let id = parseInt(c.resourceURI.split('/').pop());
+        const e: Related = { name: c.name, id: id };
+        if (!res.find((x) => x.id === e.id) && !_selected(this.state, id)) {
+          res.push(e)
+        }
+        if (this.state.all[id] === undefined) {
+          observables.push(this._getCharacter(id));
+        }
+      });
+    });
+    if(observables) {
+      return Observable.combineLatest(...observables)
+      .map((res: CacheData[]) => {
+        const heroes = res.map(data => {
+          return new SuperHero(data.data[0]);
+        });
+        this._store.dispatch(new AddAll(heroes));
+        return true;
+      })
+      .map(() => res);
+    } else {
+      return _makeDummyObservable(res);
+    }
+
   }
 
   hideDetails() {
@@ -155,6 +200,13 @@ export class HeroesService {
   }
 }
 
+function _makeDummyObservable(data): Observable<any> {
+  return Observable.create((observer) => {
+    observer.next(data);
+    observer.complete();
+  });
+}
+
 function _mapHeroes(data: HeroData): SuperHero {
   const h: SuperHero = new SuperHero(data);
   return h;
@@ -164,22 +216,8 @@ function _mapComics(data: ComicInterface): Comic {
   return new Comic(data);
 }
 
-function _mapRelated(data: CacheData, state: any): Related[] {
-  let res: Related[] = [];
-  data.data.forEach((serie) => {
-    serie['characters']['items'].forEach((c) => {
-      let id = parseInt(c.resourceURI.split('/').pop());
-      const e: Related = { name: c.name, id: id };
-      if (!res.find((x) => x.id === e.id) && !_selected(state,id)) {
-        res.push(e)
-      }
-    });
-  });
-  return res;
-}
-
-function _selected(state: any,id: number) {
-  if(state) {
+function _selected(state: any, id: number) {
+  if (state) {
     if (state.selected === undefined) {
       return false;
     } else {
