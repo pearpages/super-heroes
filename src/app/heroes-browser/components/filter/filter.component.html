@@ -2,7 +2,7 @@
 <div class="wrapper">
     <span (click)="removeFilter()" *ngIf="filter.length > 0" class="fa fa-window-close remove-filter"></span>
     <input [value]="filter" (keyup)="updateFilter($event.target.value)" type="text" placeholder="Filter results here..." />
-    <button (click)="clearCache()" class="btn btn-sm btn-default"><span class="fa fa-trash"></span> Remove Application Data</button>
+    <button (click)="clearCache()" class="btn btn-sm btn-default"><span class="fa fa-trash"></span> Cache</button>
 </div>
 <div *ngIf="!isShowingFavorites()" (click)="toggleFavorites()" [class]="getClasses()"><span class="fa fa-star-o"></span></div>
 <div *ngIf="isShowingFavorites()" (click)="toggleFavorites()" [class]="getClasses()"><span class="fa fa-star"></span></div>

@@ -1,7 +1,7 @@
 <div id="details-bar" [class]="'b-color-3-t '+animate()">
   <div class="wrapper" *ngIf="selected !== undefined">
     <span id="close" (click)="closeBar()" class="fa fa-window-close"></span>
-    <div id="image" [class]="selected.getCssClass()" [style.background-image]="'url('+selected.getThumbnail()+')'">
+    <div id="image" (click)="consoleLogDetails()" [class]="selected.getCssClass()" [style.background-image]="'url('+selected.getThumbnail()+')'">
       <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
       <h3>{{selected.name}}</h3>
     </div>

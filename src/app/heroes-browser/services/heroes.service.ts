@@ -55,7 +55,8 @@ export class HeroesService {
     if (this.lastSearch !== undefined) {
       this.lastSearch.unsubscribe();
     }
-    this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`).subscribe((data) => this._mapMoreHeroes(data));
+    this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`)
+      .subscribe((data) => this._mapMoreHeroes(data));
   }
 
   clearCache(): Promise<boolean> {
