@@ -11,8 +11,9 @@
     <div class="row">
 
       <div class="col-sm-4 col-left">
-        <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
-        <img class="img-fluid" [src]="selected.getThumbnail()" alt="">
+        <div class="image-container" [style.background-image]="'url('+selected.getThumbnail()+')'">
+          <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
+        </div>
         <app-related-heroes [related]="getDetails()"></app-related-heroes>
         <div class="button-wrapper">
           <button *ngIf="!isFavorite()" class="btn b-color-1" (click)="saveFavorite()"><span class="fa fa-star"></span> Save as Favorite</button>

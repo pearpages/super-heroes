@@ -40,6 +40,13 @@
                     font-size: 50px;
                     text-shadow: 0px 0px 6px #000;
                 }
+                .image-container {
+                    min-height: 30vh;
+                    width: 100%;
+                    background: center center;
+                    background-size: cover;
+                    margin-bottom: 20px;
+                }
                 .button-wrapper {
                     position: absolute;
                     left: 0;
