@@ -12,6 +12,7 @@ export class MiniCardComponent implements OnInit{
 
   @Input() related: {id:number,name: string};
   image: string;
+  imageLoaded: boolean = false;
 
   constructor(private _heroes: HeroesService) { }
 
