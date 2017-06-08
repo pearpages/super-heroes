@@ -1,6 +1,23 @@
+@media (max-height: 666px) {
+     #mini-cards-container {
+        height: 148px !important;
+    }
+}
+
+@media (min-height: 667px) {
+    #mini-cards-container {
+        height: 220px !important;
+    }
+}
+
+@media (min-height: 668px) {
+    #mini-cards-container {
+        height: 45vh !important;
+    }
+}
+
 #related-heroes {
     #mini-cards-container {
-        max-height: 45vh;
         overflow: scroll;
         overflow-x: hidden;
     }
@@ -10,13 +27,12 @@
         height: 12px;
         /* for horizontal scrollbars */
     }
-    ::-webkit-scrollbar-track {
+     ::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.1);
     }
-    ::-webkit-scrollbar-thumb {
+     ::-webkit-scrollbar-thumb {
         background: rgba(0, 0, 0, 0.5);
     }
-
     .loading {
         text-align: center;
         padding-top: 100px;
