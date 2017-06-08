@@ -63,6 +63,11 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
         case actions.UNSELECT_HERO:
             newState = Object.assign({}, state, { selected: undefined, section: 'grid' });
             break;
+        case actions.ADD_COMICS_TO_SELECTED:
+            const selected2 = SuperHero.clone(state.selected);
+            selected2['comics'] = action.payload;
+            newState = Object.assign({},state,{selected: selected2});
+            break;
         case actions.ADD_RELATED:
             const obj = state.all[state.selected.id];
             obj['related'] = action.payload;

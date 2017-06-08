@@ -1,3 +1,4 @@
+import { Comic } from './../models/comic';
 import { Related } from './../models/related';
 import { Query } from './../models/query';
 import { SuperHero } from './../models/super-hero';
@@ -14,10 +15,16 @@ export const ADD_RELATED = '[Heroes Browser] Add Related';
 export const ADD_FAVORITES = '[Heroes Browser] Add Favorites';
 export const ONLY_FAVORITES = '[Heroes Browser] Only Favorites';
 export const ADD_ALL = '[Heroes Browser] Add All';
+export const ADD_COMICS_TO_SELECTED = '[Heroes Browser] Add Comics To Selected';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
     constructor(public payload: {heroes: SuperHero[]}) {}
+}
+
+export class AddComicsToSelected implements Action {
+    readonly type = ADD_COMICS_TO_SELECTED;
+    constructor(public payload: Comic[]) {}
 }
 
 export class AddAll implements Action {

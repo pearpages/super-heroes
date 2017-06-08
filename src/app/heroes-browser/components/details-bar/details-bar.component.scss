@@ -48,7 +48,9 @@
     #main {
         overflow: hidden;
         .description {
-            min-height: 120px;
+            height: 120px;
+            overflow: scroll;
+            overflow-x: hidden;
         }
     }
     .wrapper {

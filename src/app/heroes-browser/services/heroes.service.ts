@@ -1,6 +1,6 @@
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites, AddAll } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites, AddAll, AddComicsToSelected } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -77,6 +77,7 @@ export class HeroesService {
 
   showDetails() {
     this._store.dispatch(new ShowDetails());
+    this.getComics(this.state.selected.id);
   }
 
   loadFavorites(): Observable<CacheData> {
@@ -190,6 +191,16 @@ export class HeroesService {
       return _makeDummyObservable(res);
     }
 
+  }
+
+  getComics(id:number) {
+    this._myCache.get('comics',`${url}/characters/${id}/comics?apikey=${apikey}&limit=100`)
+      .map((data:CacheData) => {
+        return data.data.map(_mapComics);
+      })
+      .subscribe((d: Comic[]) => {
+        this._store.dispatch(new AddComicsToSelected(d));
+      });
   }
 
   hideDetails() {

@@ -4,8 +4,8 @@ import { Comic } from './comic';
 
 export class SuperHero {
 
-    comics?: Comic[];
-    related?: Related[];
+    comics: Comic[] = undefined;
+    related: Related[] = undefined;
     description: string;
     events: any;
     id: number;
@@ -29,6 +29,8 @@ export class SuperHero {
         this.stories = data.stories;
         this.thumbnail = data.thumbnail;
         this.urls = data.urls;
+        this.related = (data['related'] && data['related'] instanceof Array) ? data['related'] : undefined;
+        this.comics = (data['comics'] && data['comics'] instanceof Array) ? data['comics'] : undefined;
     }
 
     getThumbnail(): string {

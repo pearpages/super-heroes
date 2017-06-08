@@ -1,12 +1,13 @@
 import { HeroesService } from './../../services/heroes.service';
 import { SuperHero } from './../../models/super-hero';
 import { Store } from '@ngrx/store';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailsComponent {
 
@@ -24,6 +25,10 @@ export class DetailsComponent {
 
   removeFavorite() {
     this._heroes.removeFavorite(this.selected);
+  }
+
+  getDescription() {
+    return (this.selected.description) ? this.selected.description : 'No Description Available in the Database.'
   }
 
   getDetails() {

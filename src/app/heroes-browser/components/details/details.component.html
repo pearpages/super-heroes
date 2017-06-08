@@ -11,14 +11,16 @@
 
     <div class="col-sm-7 col-md-8 col-right float-sm-right">
       <h2>{{selected.name}}</h2>
-      <div class="description">{{selected.description}}</div>
+      <div class="description">{{getDescription()}}</div>
       <h3>Comics</h3>
-      <!--<div *ngFor="let item of selected.comics" style="float:left">
-          <img [width]="'75'" [src]="item.getThumbnail()" alt="">
-        </div>-->
-      <hr style="clear:left">
+      <div id="comic-container">
+        <div class="comic mb-4 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-2 float-left" *ngFor="let item of selected.comics">
+          <div class="comic-wrapper" [style.background-image]="'url('+item.getThumbnail()+')'"></div>
+        </div>
+        <!--<div class="empty-comics" *ngIf="selected.comics.length === 0">No Comics in the Database.</div>-->
+      </div>
       <h3>Also appears in...</h3>
-      <pre style="overflow: scroll; height: 500px"></pre>
+
     </div>
 
     <div class="col-sm-5 col-md-4 col-left float-sm-left">
