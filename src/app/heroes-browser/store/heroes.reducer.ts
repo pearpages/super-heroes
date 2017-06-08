@@ -47,7 +47,7 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             newState = Object.assign({},state,{all: newAll});
             break;
         case actions.SCROLLED:
-            if (!state.moreData) {
+            if (!state.moreData || state.onlyFavorites) {
                 newState = state;
             } else {
                 newState = Object.assign({}, state, { loading: true, scrolled: true });
