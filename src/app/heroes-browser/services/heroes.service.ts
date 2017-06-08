@@ -49,7 +49,7 @@ export class HeroesService {
   }
 
   loadMore() {
-    if (this.state.scrolled === false) {
+    if (this.state.scrolled === false && !this.state.onlyFavorites) {
       this._store.dispatch(new actions.Scrolled());
       this._search();
     }

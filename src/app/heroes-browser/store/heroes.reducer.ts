@@ -54,7 +54,7 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             }
             break;
         case actions.ONLY_FAVORITES:
-            newState = Object.assign({}, state, { onlyFavorites: true, list: state.favorites.map((x) => SuperHero.clone(x)) });
+            newState = Object.assign({},state, { query: new Query('',0), onlyFavorites: true, list: state.favorites.map((x) => SuperHero.clone(x)) });
             break;
         case actions.SELECT_HERO:
             const section = (state.section === 'grid') ? 'sidebar' : state.section;
