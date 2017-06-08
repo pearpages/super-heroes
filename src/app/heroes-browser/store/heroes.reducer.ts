@@ -57,7 +57,8 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             newState = Object.assign({}, state, { onlyFavorites: true, list: state.favorites.map((x) => SuperHero.clone(x)) });
             break;
         case actions.SELECT_HERO:
-            newState = Object.assign({}, state, { selected: action.payload, section: 'sidebar' });
+            const section = (state.section === 'grid') ? 'sidebar' : state.section;
+            newState = Object.assign({}, state, { selected: action.payload, section });
             break;
         case actions.UNSELECT_HERO:
             newState = Object.assign({}, state, { selected: undefined, section: 'grid' });
