@@ -1,8 +1,8 @@
-<header>
+<header [style.display]="(state.section === 'details') ? 'none' : 'block'">
     <h1 class="main-title b-color-1">Marvel Heroes</h1>
     <app-filter [filter]="state.query.filter"></app-filter>
 </header>
-<app-heroes-grid [heroes]="state.list"></app-heroes-grid>
+<app-heroes-grid [style.display]="(state.section === 'details') ? 'none' : 'block'" [heroes]="state.list"></app-heroes-grid>
 <app-details-bar [selected]="getSidebar()"></app-details-bar>
 <app-details [selected]="getDetails()"></app-details>
 <app-loading [loading]="state.loading"></app-loading>

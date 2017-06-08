@@ -1,17 +1,12 @@
 #details {
-    position: fixed;
-    top: 0;
     width: 100%;
-    height: 100%;
-    z-index: 3000;
+    min-height: 100vh;
+    overflow: hidden;
     header {
-        position: absolute;
-        z-index: 3500;
         width: 100%;
         height: 80px;
         span#back {
             cursor: pointer;
-            z-index: 3500;
         }
         span#back:hover {
             text-decoration: underline;
@@ -21,21 +16,16 @@
         }
     }
     .main {
-        position: absolute;
+
         top: 0;
-        z-index: 2500;
-        height: 100%;
-        width: 100%;
-        padding-top: 80px !important;
         .row {
-            height: 100%;
             .col-left,
             .col-right {
                 position: relative;
             }
             .col-left {
                 .favorite {
-                    position: absolute;
+
                     padding: 20px;
                     font-size: 50px;
                     text-shadow: 0px 0px 6px #000;
@@ -48,9 +38,7 @@
                     margin-bottom: 20px;
                 }
                 .button-wrapper {
-                    position: absolute;
-                    left: 0;
-                    bottom: 30px;
+                    margin-top: 20px;
                     width: 100%;
                     padding: 0 20px;
                     button {
