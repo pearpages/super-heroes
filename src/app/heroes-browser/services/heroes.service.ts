@@ -140,7 +140,7 @@ export class HeroesService {
   getRelated(hero: SuperHero) {
     const url = this.state.selected.series.collectionURI;
     this._myCache.get('related', `${url}?apikey=${apikey}`).subscribe((data: CacheData) => {
-      const related = _mapRelated(data);
+      const related = _mapRelated(data,this.state);
       this._store.dispatch(new AddRelated(related));
     });
   }
@@ -163,15 +163,28 @@ function _mapComics(data: ComicInterface): Comic {
   return new Comic(data);
 }
 
-function _mapRelated(data: CacheData): Related[] {
+function _mapRelated(data: CacheData, state: any): Related[] {
   let res: Related[] = [];
   data.data.forEach((serie) => {
     serie['characters']['items'].forEach((c) => {
-      const e: Related = { name: c.name, id: parseInt(c.resourceURI.split('/').pop()) };
-      if (!res.find((x) => x.id === e.id)) {
+      let id = parseInt(c.resourceURI.split('/').pop());
+      const e: Related = { name: c.name, id: id };
+      if (!res.find((x) => x.id === e.id) && !_selected(state,id)) {
         res.push(e)
       }
     });
   });
   return res;
+}
+
+function _selected(state: any,id: number) {
+  if(state) {
+    if (state.selected === undefined) {
+      return false;
+    } else {
+      return state.selected.id === id;
+    }
+  } else {
+    return false;
+  }
 }
