@@ -16,9 +16,9 @@
         }
     }
     .main {
-        #comic-container {
+        #comic-container, .series-container {
             overflow: hidden;
-            .comic-wrapper {
+            .comic-wrapper, {
                 width: 100%;
                 height: 165px;
                 background-size: cover;

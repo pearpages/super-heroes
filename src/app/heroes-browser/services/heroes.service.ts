@@ -1,6 +1,8 @@
+import { SeriesInterface } from './../models/series-interface';
+import { Series } from './../models/series';
 import { Related } from './../models/related';
 import { CacheData } from './../models/cache-data';
-import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites, AddAll, AddComicsToSelected } from './../store/heroes.actions';
+import { AddRelated, SelectHero, UnselectHero, ShowDetails, HideDetails, AddFavorites, OnlyFavorites, AddAll, AddComicsToSelected, AddSeriesToSelected } from './../store/heroes.actions';
 import { Query } from './../models/query';
 import { HeroData } from './../models/hero-data';
 import { MyCacheService } from './my-cache.service';
@@ -78,6 +80,7 @@ export class HeroesService {
   showDetails() {
     this._store.dispatch(new ShowDetails());
     this.getComics(this.state.selected.id);
+    this.getSeries(this.state.selected.id);
   }
 
   loadFavorites(): Observable<CacheData> {
@@ -142,6 +145,8 @@ export class HeroesService {
     } else {
       this._store.dispatch(new SelectHero(hero));
       this.getRelated(hero);
+      this.getComics(this.state.selected.id);
+      this.getSeries(this.state.selected.id);
     }
   }
 
@@ -149,6 +154,8 @@ export class HeroesService {
     const hero = this.state.all[id];
     this._store.dispatch(new SelectHero(hero));
     this.getRelated(hero);
+    this.getComics(this.state.selected.id);
+    this.getSeries(this.state.selected.id);
   }
 
   getRelated(hero: SuperHero) {
@@ -158,7 +165,7 @@ export class HeroesService {
         this._mapRelated(data)
           .subscribe((related: Related[]) => {
             this._store.dispatch(new AddRelated(related));
-        });
+          });
       });
   }
 
@@ -193,13 +200,23 @@ export class HeroesService {
 
   }
 
-  getComics(id:number) {
-    this._myCache.get('comics',`${url}/characters/${id}/comics?apikey=${apikey}&limit=100`)
-      .map((data:CacheData) => {
+  getComics(id: number) {
+    this._myCache.get('comics', `${url}/characters/${id}/comics?apikey=${apikey}&limit=20`)
+      .map((data: CacheData) => {
         return data.data.map(_mapComics);
       })
       .subscribe((d: Comic[]) => {
         this._store.dispatch(new AddComicsToSelected(d));
+      });
+  }
+
+  getSeries(id: number) {
+    this._myCache.get('comics', `${url}/characters/${id}/series?apikey=${apikey}&limit=20`)
+      .map((data: CacheData) => {
+        return data.data.map(_mapSeries);
+      })
+      .subscribe((series: Series[]) => {
+        this._store.dispatch(new AddSeriesToSelected(series));
       });
   }
 
@@ -226,6 +243,10 @@ function _mapHeroes(data: HeroData): SuperHero {
 
 function _mapComics(data: ComicInterface): Comic {
   return new Comic(data);
+}
+
+function _mapSeries(data: SeriesInterface): Series {
+  return new Series(data);
 }
 
 function _selected(state: any, id: number) {

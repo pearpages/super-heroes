@@ -1,3 +1,4 @@
+import { Series } from './../models/series';
 import { Comic } from './../models/comic';
 import { Related } from './../models/related';
 import { Query } from './../models/query';
@@ -16,6 +17,7 @@ export const ADD_FAVORITES = '[Heroes Browser] Add Favorites';
 export const ONLY_FAVORITES = '[Heroes Browser] Only Favorites';
 export const ADD_ALL = '[Heroes Browser] Add All';
 export const ADD_COMICS_TO_SELECTED = '[Heroes Browser] Add Comics To Selected';
+export const ADD_SERIES_TO_SELECTED = '[Heroes Browser] Add Series To Selected';
 
 export class AddHeroes implements Action {
     readonly type = ADD_HEROES;
@@ -25,6 +27,11 @@ export class AddHeroes implements Action {
 export class AddComicsToSelected implements Action {
     readonly type = ADD_COMICS_TO_SELECTED;
     constructor(public payload: Comic[]) {}
+}
+
+export class AddSeriesToSelected implements Action {
+    readonly type = ADD_SERIES_TO_SELECTED;
+    constructor(public payload: Series[]) {}
 }
 
 export class AddAll implements Action {

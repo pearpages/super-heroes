@@ -38,13 +38,13 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
             newState = Object.assign({}, state, { onlyFavorites: false, moreData: true, loading: true, query: new Query(action.payload, 0), list: [] });
             break;
         case actions.ADD_ALL:
-            const newAll = Object.assign({},state.all);
+            const newAll = Object.assign({}, state.all);
             action.payload.forEach(hero => {
-                if(newAll[hero.id] === undefined) {
+                if (newAll[hero.id] === undefined) {
                     newAll[hero.id] = hero;
                 }
             })
-            newState = Object.assign({},state,{all: newAll});
+            newState = Object.assign({}, state, { all: newAll });
             break;
         case actions.SCROLLED:
             if (!state.moreData || state.onlyFavorites) {
@@ -66,7 +66,12 @@ export const heroes: ActionReducer<HeroesStore> = function (state: HeroesStore =
         case actions.ADD_COMICS_TO_SELECTED:
             const selected2 = SuperHero.clone(state.selected);
             selected2['comics'] = action.payload;
-            newState = Object.assign({},state,{selected: selected2});
+            newState = Object.assign({}, state, { selected: selected2 });
+            break;
+        case actions.ADD_SERIES_TO_SELECTED:
+            const selected3 = SuperHero.clone(state.selected);
+            selected3['seriesList'] = action.payload;
+            newState = Object.assign({}, state, { selected: selected3 });
             break;
         case actions.ADD_RELATED:
             const obj = state.all[state.selected.id];
