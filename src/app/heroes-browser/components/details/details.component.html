@@ -11,20 +11,22 @@
 
     <div class="col-sm-7 col-md-8 col-right float-sm-right">
       <h2>{{selected.name}}</h2>
-      <div class="description">{{getDescription()}}</div>
+      <div class="description mb-4">{{getDescription()}}</div>
       <h3>Comics</h3>
-      <div id="comic-container">
+      <div id="comic-container" class="mb-4">
         <div class="comic mb-4 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-2 float-left" *ngFor="let item of selected.comics">
           <div class="comic-wrapper" [style.background-image]="'url('+item.getThumbnail()+')'"></div>
         </div>
         <!--<div class="empty-comics" *ngIf="selected.comics.length === 0">No Comics in the Database.</div>-->
       </div>
       <h3>Also appears in...</h3>
+      <div class="series-container mb-4">
 
+      </div>
     </div>
 
     <div class="col-sm-5 col-md-4 col-left float-sm-left">
-      <div class="image-container" [style.background-image]="'url('+selected.getThumbnail()+')'">
+      <div class="image-container img-thumbnail" [style.background-image]="'url('+selected.getThumbnail()+')'">
         <span *ngIf="isFavorite()" class="fa fa-star favorite"></span>
       </div>
       <app-related-heroes [related]="getDetails()"></app-related-heroes>
