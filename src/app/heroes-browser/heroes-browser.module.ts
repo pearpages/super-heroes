@@ -11,6 +11,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { MiniCardComponent } from './components/mini-card/mini-card.component';
 import { RelatedHeroesComponent } from './components/related-heroes/related-heroes.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
+import { BookletComponent } from './components/booklet/booklet.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { NoResultsComponent } from './components/no-results/no-results.component
     HttpModule,
     InfiniteScrollModule
   ],
-  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent, LoadingComponent, MiniCardComponent, RelatedHeroesComponent, NoResultsComponent],
+  declarations: [FilterComponent, CharacterCardComponent, HeroesGridComponent, DetailsBarComponent, DetailsComponent, LoadingComponent, MiniCardComponent, RelatedHeroesComponent, NoResultsComponent, BookletComponent],
   exports: [NoResultsComponent, FilterComponent, HeroesGridComponent,DetailsBarComponent,DetailsComponent, LoadingComponent]
 })
 export class HeroesBrowserModule { }
