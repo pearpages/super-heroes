@@ -23,7 +23,7 @@ export class MiniCardComponent implements OnInit{
   }
 
   select(id: number) {
-    this._heroes.selectHeroById(id);
+    this._heroes.selectHero(id);
   }
 
   isFavorite():boolean {

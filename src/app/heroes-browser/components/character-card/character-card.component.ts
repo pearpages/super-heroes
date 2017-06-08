@@ -16,7 +16,7 @@ export class CharacterCardComponent {
   constructor(private _heroes:HeroesService) { }
 
   showDetails(hero: SuperHero) {
-    this._heroes.selectHero(hero);
+    this._heroes.selectHero(hero.id);
   }
 
   isFavorite():boolean {

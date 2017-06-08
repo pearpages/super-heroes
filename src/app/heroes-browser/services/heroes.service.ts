@@ -139,23 +139,16 @@ export class HeroesService {
     return this.state.onlyFavorites;
   }
 
-  selectHero(hero?: SuperHero) {
-    if (hero === undefined) {
+  selectHero(id?: number) {
+    if (id === undefined) {
       this._store.dispatch(new UnselectHero());
     } else {
+      const hero = this.state.all[id];
       this._store.dispatch(new SelectHero(hero));
       this.getRelated(hero);
       this.getComics(this.state.selected.id);
       this.getSeries(this.state.selected.id);
     }
-  }
-
-  selectHeroById(id: number) {
-    const hero = this.state.all[id];
-    this._store.dispatch(new SelectHero(hero));
-    this.getRelated(hero);
-    this.getComics(this.state.selected.id);
-    this.getSeries(this.state.selected.id);
   }
 
   getRelated(hero: SuperHero) {
