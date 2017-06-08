@@ -24,4 +24,12 @@ export class MiniCardComponent implements OnInit{
   select(id: number) {
     this._heroes.selectHeroById(id);
   }
+
+  isFavorite():boolean {
+    return this._heroes.isFavorite(this.related.id)
+  }
+
+  getClasses() {
+    return (this.isFavorite()) ? 'mini-card col-3 pull-left p-1 favorite' : 'mini-card col-3 pull-left p-1';
+  }
 }

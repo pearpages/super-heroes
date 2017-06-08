@@ -1,5 +1,13 @@
 .mini-card {
     position: relative;
+    .fa-star {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 19px;
+        text-shadow: 0px 0px 5px;
+        color: #f9ca2c;
+    }
     .image {
         height: 100px;
         border: 1px solid black;
@@ -23,6 +31,24 @@
         }
     }
 }
+
+.mini-card.favorite {
+    .wrapper {
+        .name {
+            padding: 4px;
+            background: darken(#f9ca2c,10%);
+            border-left: solid 1px #000;
+            border-right: solid 1px #000;
+            border-bottom: solid 1px #000;
+            color: #333;
+            font-weight: bold;
+            width: 100%;
+            font-size: 12px;
+            overflow: hidden;
+        }
+    }
+}
+
 .mini-card:hover {
     background: #666;
 }
