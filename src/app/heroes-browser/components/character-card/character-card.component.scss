@@ -1,3 +1,13 @@
+@media (max-height: 667px) {
+    .character-card {
+        .main {
+            .inner {
+                height: 136px !important;
+            }
+        }
+    }
+}
+
 .character-card {
     overflow: hidden;
     box-shadow: #999 0px 3px 5px 1px;
@@ -35,8 +45,9 @@
         z-index: 1000;
     }
 }
+
 .character-card:hover {
-    box-shadow: darken(#f9ca2c,25%) 0px 3px 5px 1px;
+    box-shadow: darken(#f9ca2c, 25%) 0px 3px 5px 1px;
     .footer {
         text-decoration: underline;
     }
