@@ -18,6 +18,7 @@ You can find an example of the app [here]: (https://pearpages.com/super-heroes)
 This project strongly depends on the following packages:
 
 + localForage (IndexDB cache)
++ ngx-infinite-scroll
 + bootstrap 4
 + ngrx
 + angular-cli
