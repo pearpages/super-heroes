@@ -29,6 +29,52 @@ export class HeroesService {
     this._store.select('heroes').subscribe(d => this.state = <HeroesStore>d);
   }
 
+  private _getCharacter(id: number): Observable<CacheData> {
+    return this._myCache.get('character', `${url}/characters/${id}?apikey=${apikey}`);
+  }
+
+  private _getSearch(query: Query): Observable<CacheData> {
+    return this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${query.getQueryString()}`);
+  }
+
+  private _getComics(id: number): Observable<CacheData> {
+    return this._myCache.get('comics', `${url}/characters/${id}/comics?apikey=${apikey}&limit=20`)
+  }
+
+  private _getSeries(id: number): Observable<CacheData> {
+    return this._myCache.get('comics', `${url}/characters/${id}/series?apikey=${apikey}&limit=20`);
+  }
+
+  private _addComics(id: number) {
+    this._getComics(id)
+      .map((data: CacheData) => {
+        return data.data.map(_mapComics);
+      })
+      .subscribe((d: Comic[]) => {
+        this._store.dispatch(new AddComicsToSelected(d));
+      });
+  }
+
+  private _addSeries(id: number) {
+    this._getSeries(id)
+      .map((data: CacheData) => {
+        return data.data.map(_mapSeries);
+      })
+      .subscribe((series: Series[]) => {
+        this._store.dispatch(new AddSeriesToSelected(series));
+      });
+  }
+
+  private _addRelated(url: string) {
+    this._myCache.get('related', `${url}?apikey=${apikey}`)
+      .subscribe((data: CacheData) => {
+        this._mapRelated(data)
+          .subscribe((related: Related[]) => {
+            this._store.dispatch(new AddRelated(related));
+          });
+      });
+  }
+
   getImage(id: number): Observable<string> {
     const h: SuperHero = this.state.all[id];
     if (h) {
@@ -44,10 +90,6 @@ export class HeroesService {
     }
   }
 
-  _getCharacter(id: number): Observable<CacheData> {
-    return this._myCache.get('character', `${url}/characters/${id}?apikey=${apikey}`);
-  }
-
   loadMore() {
     if (this.state.scrolled === false && !this.state.onlyFavorites) {
       this._store.dispatch(new actions.Scrolled());
@@ -60,16 +102,16 @@ export class HeroesService {
     this._search();
   }
 
-  _mapMoreHeroes(data: CacheData) {
+  private _mapMoreHeroes(data: CacheData) {
     const heroes = data.data.map(_mapHeroes);
     this._store.dispatch(new actions.AddHeroes({ heroes }));
   }
 
-  _search() {
+  private _search() {
     if (this.lastSearch !== undefined) {
       this.lastSearch.unsubscribe();
     }
-    this.lastSearch = this._myCache.get('characters', `${url}/characters?apikey=${apikey}&${this.state.query.getQueryString()}`)
+    this.lastSearch = this._getSearch(this.state.query)
       .subscribe((data) => this._mapMoreHeroes(data));
   }
 
@@ -79,8 +121,6 @@ export class HeroesService {
 
   showDetails() {
     this._store.dispatch(new ShowDetails());
-    this.getComics(this.state.selected.id);
-    this.getSeries(this.state.selected.id);
   }
 
   loadFavorites(): Observable<CacheData> {
@@ -145,24 +185,13 @@ export class HeroesService {
     } else {
       const hero = this.state.all[id];
       this._store.dispatch(new SelectHero(hero));
-      this.getRelated(hero);
-      this.getComics(this.state.selected.id);
-      this.getSeries(this.state.selected.id);
+      this._addRelated(this.state.selected.series.collectionURI);
+      this._addComics(this.state.selected.id);
+      this._addSeries(this.state.selected.id);
     }
   }
 
-  getRelated(hero: SuperHero) {
-    const url = this.state.selected.series.collectionURI;
-    this._myCache.get('related', `${url}?apikey=${apikey}`)
-      .subscribe((data: CacheData) => {
-        this._mapRelated(data)
-          .subscribe((related: Related[]) => {
-            this._store.dispatch(new AddRelated(related));
-          });
-      });
-  }
-
-  _mapRelated(data: CacheData): Observable<Related[]> {
+  private _mapRelated(data: CacheData): Observable<Related[]> {
     let res: Related[] = [];
     let observables: Observable<any>[] = [];
     data.data.forEach((serie) => {
@@ -193,33 +222,10 @@ export class HeroesService {
 
   }
 
-  getComics(id: number) {
-    this._myCache.get('comics', `${url}/characters/${id}/comics?apikey=${apikey}&limit=20`)
-      .map((data: CacheData) => {
-        return data.data.map(_mapComics);
-      })
-      .subscribe((d: Comic[]) => {
-        this._store.dispatch(new AddComicsToSelected(d));
-      });
-  }
-
-  getSeries(id: number) {
-    this._myCache.get('comics', `${url}/characters/${id}/series?apikey=${apikey}&limit=20`)
-      .map((data: CacheData) => {
-        return data.data.map(_mapSeries);
-      })
-      .subscribe((series: Series[]) => {
-        this._store.dispatch(new AddSeriesToSelected(series));
-      });
-  }
-
   hideDetails() {
     this._store.dispatch(new HideDetails());
   }
 
-  getHero(id: number): SuperHero {
-    return this.state.all[id];
-  }
 }
 
 function _makeDummyObservable(data): Observable<any> {
