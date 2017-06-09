@@ -6,12 +6,12 @@ You can find an example of the app [here]: (https://pearpages.com/super-heroes)
 
 ## Images
 
-![Details big](./docs/images/details-big.png "Details Big")
-![Details small](./docs/images/details-small.png "Details Small")
-![Grid big](./docs/images/grid-big.png "Grid Big")
-![Grid small](./docs/images/grid-small.png "Grid Small")
-![Sidebar big](./docs/images/sidebar-big.png "Sidebar Big")
-![Sidebar small](./docs/images/sidebar-small.png "Sidebar Small")
+![Details big](./docs/images/details-big.png "Details Big" =500x)
+![Details small](./docs/images/details-small.png "Details Small" =x460)
+![Grid big](./docs/images/grid-big.png "Grid Big" =500x)
+![Grid small](./docs/images/grid-small.png "Grid Small" =x460)
+![Sidebar big](./docs/images/sidebar-big.png "Sidebar Big" =500x)
+![Sidebar small](./docs/images/sidebar-small.png "Sidebar Small" =x460)
 
 ## Dependencies
 
