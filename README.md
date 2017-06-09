@@ -20,6 +20,7 @@ This project strongly depends on the following packages:
 + localForage (IndexDB cache)
 + ngx-infinite-scroll
 + bootstrap 4
++ font-awesome
 + ngrx
 + angular-cli
 
