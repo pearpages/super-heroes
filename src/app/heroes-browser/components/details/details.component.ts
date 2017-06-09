@@ -47,4 +47,26 @@ export class DetailsComponent {
       return this._heroes.isFavorite(this.selected.id);
     }
   }
+
+  hasComics(): boolean {
+    if (this.selected) {
+      if (this.selected['comics']) {
+        if (this.selected['comics'].length > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  hasSeries(): boolean {
+    if (this.selected) {
+      if (this.selected['seriesList']) {
+        if (this.selected['seriesList'].length > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
