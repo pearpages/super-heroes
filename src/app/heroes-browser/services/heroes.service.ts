@@ -16,6 +16,8 @@ import { Store } from '@ngrx/store';
 import { HeroesStore } from './../store/heroes.store';
 import { Subscription } from 'rxjs/Subscription';
 
+// CONFIG VARS
+
 const apikey = '2ffa799140459e091b3ee3bcb05531e7';
 const url = 'https://gateway.marvel.com:443/v1/public';
 
@@ -55,19 +57,12 @@ export class HeroesService {
       });
   }
 
-  private _addSeries(id: number) {
+  private _addRelatedAndSeries(id: number) {
     this._getSeries(id)
-      .map((data: CacheData) => {
-        return data.data.map(_mapSeries);
-      })
-      .subscribe((series: Series[]) => {
-        this._store.dispatch(new AddSeriesToSelected(series));
-      });
-  }
-
-  private _addRelated(url: string) {
-    this._myCache.get('related', `${url}?apikey=${apikey}`)
       .subscribe((data: CacheData) => {
+        const series = data.data.map(_mapSeries);
+        this._store.dispatch(new AddSeriesToSelected(series));
+
         this._mapRelated(data)
           .subscribe((related: Related[]) => {
             this._store.dispatch(new AddRelated(related));
@@ -185,9 +180,8 @@ export class HeroesService {
     } else {
       const hero = this.state.all[id];
       this._store.dispatch(new SelectHero(hero));
-      this._addRelated(this.state.selected.series.collectionURI);
+      this._addRelatedAndSeries(this.state.selected.id);
       this._addComics(this.state.selected.id);
-      this._addSeries(this.state.selected.id);
     }
   }
 
@@ -227,6 +221,8 @@ export class HeroesService {
   }
 
 }
+
+// PRIVATE UTILITIES
 
 function _makeDummyObservable(data): Observable<any> {
   return Observable.create((observer) => {
