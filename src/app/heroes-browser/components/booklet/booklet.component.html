@@ -1,7 +1,0 @@
-<div *ngIf="!imageLoaded" class="comic-wrapper">
-    <span class="comic-wrapper" class="fa fa-spinner spin image-not-loaded"></span>
-</div>
-<div *ngIf="imageLoaded" class="comic-wrapper" [style.background-image]="'url('+item.getThumbnail()+')'"></div>
-<div class="label">{{item.title}}</div>
-
-<img [style.display]="'none'" (load)="imageLoaded=true" [src]="item.getThumbnail()" />
