@@ -370,6 +370,26 @@ var DetailsComponent = (function () {
             return this._heroes.isFavorite(this.selected.id);
         }
     };
+    DetailsComponent.prototype.hasComics = function () {
+        if (this.selected) {
+            if (this.selected['comics']) {
+                if (this.selected['comics'].length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+    DetailsComponent.prototype.hasSeries = function () {
+        if (this.selected) {
+            if (this.selected['seriesList']) {
+                if (this.selected['seriesList'].length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
     return DetailsComponent;
 }());
 __decorate([
@@ -1016,6 +1036,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// CONFIG VARS
 var apikey = '2ffa799140459e091b3ee3bcb05531e7';
 var url = 'https://gateway.marvel.com:443/v1/public';
 var HeroesService = (function () {
@@ -1047,20 +1068,12 @@ var HeroesService = (function () {
             _this._store.dispatch(new __WEBPACK_IMPORTED_MODULE_1__store_heroes_actions__["a" /* AddComicsToSelected */](d));
         });
     };
-    HeroesService.prototype._addSeries = function (id) {
+    HeroesService.prototype._addRelatedAndSeries = function (id) {
         var _this = this;
         this._getSeries(id)
-            .map(function (data) {
-            return data.data.map(_mapSeries);
-        })
-            .subscribe(function (series) {
-            _this._store.dispatch(new __WEBPACK_IMPORTED_MODULE_1__store_heroes_actions__["b" /* AddSeriesToSelected */](series));
-        });
-    };
-    HeroesService.prototype._addRelated = function (url) {
-        var _this = this;
-        this._myCache.get('related', url + "?apikey=" + apikey)
             .subscribe(function (data) {
+            var series = data.data.map(_mapSeries);
+            _this._store.dispatch(new __WEBPACK_IMPORTED_MODULE_1__store_heroes_actions__["b" /* AddSeriesToSelected */](series));
             _this._mapRelated(data)
                 .subscribe(function (related) {
                 _this._store.dispatch(new __WEBPACK_IMPORTED_MODULE_1__store_heroes_actions__["c" /* AddRelated */](related));
@@ -1172,9 +1185,8 @@ var HeroesService = (function () {
         else {
             var hero = this.state.all[id];
             this._store.dispatch(new __WEBPACK_IMPORTED_MODULE_1__store_heroes_actions__["k" /* SelectHero */](hero));
-            this._addRelated(this.state.selected.series.collectionURI);
+            this._addRelatedAndSeries(this.state.selected.id);
             this._addComics(this.state.selected.id);
-            this._addSeries(this.state.selected.id);
         }
     };
     HeroesService.prototype._mapRelated = function (data) {
@@ -1217,6 +1229,7 @@ HeroesService = __decorate([
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_8__ngrx_store__["b" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ngrx_store__["b" /* Store */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__my_cache_service__["a" /* MyCacheService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__my_cache_service__["a" /* MyCacheService */]) === "function" && _b || Object])
 ], HeroesService);
 
+// PRIVATE UTILITIES
 function _makeDummyObservable(data) {
     return __WEBPACK_IMPORTED_MODULE_5_rxjs_Rx__["Observable"].create(function (observer) {
         observer.next(data);
@@ -1331,7 +1344,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "#details {\n  width: 100%;\n  min-height: 100vh;\n  overflow: hidden; }\n  #details header {\n    width: 100%;\n    height: 80px; }\n    #details header span#back {\n      cursor: pointer; }\n    #details header span#back:hover {\n      text-decoration: underline; }\n    #details header .separator {\n      height: 8px; }\n  #details h3 {\n    margin-bottom: 16px; }\n  #details .main #comic-container,\n  #details .main .series-container {\n    overflow: hidden; }\n  #details .main .col-left .favorite {\n    padding: 20px;\n    font-size: 50px;\n    text-shadow: 0px 0px 6px #000; }\n  #details .main .col-left .image-container {\n    min-height: 30vh;\n    width: 100%;\n    background: center center;\n    background-size: cover;\n    margin-bottom: 20px; }\n  #details .main .col-left .button-wrapper {\n    margin: 20px 0;\n    width: 100%;\n    padding: 0 20px; }\n    #details .main .col-left .button-wrapper button {\n      width: 100%; }\n", ""]);
+exports.push([module.i, "#details {\n  width: 100%;\n  min-height: 100vh;\n  overflow: hidden; }\n  #details header {\n    width: 100%;\n    height: 80px; }\n    #details header span#back {\n      cursor: pointer; }\n    #details header span#back:hover {\n      text-decoration: underline; }\n    #details header .separator {\n      height: 8px; }\n  #details h3 {\n    margin-bottom: 16px; }\n  #details .main #comic-container,\n  #details .main .series-container {\n    overflow: hidden; }\n  #details .main .loading {\n    margin-bottom: 20px; }\n  #details .main .col-left .favorite {\n    padding: 20px;\n    font-size: 50px;\n    text-shadow: 0px 0px 6px #000; }\n  #details .main .col-left .image-container {\n    min-height: 30vh;\n    width: 100%;\n    background: center center;\n    background-size: cover;\n    margin-bottom: 20px; }\n  #details .main .col-left .button-wrapper {\n    margin: 20px 0;\n    width: 100%;\n    padding: 0 20px; }\n    #details .main .col-left .button-wrapper button {\n      width: 100%; }\n", ""]);
 
 // exports
 
@@ -1421,7 +1434,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "#no-results {\n  background: no-repeat center center #DDD url(\"/assets/no-results.png\");\n  opacity: 0.3;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 0;\n  width: 100%;\n  height: 100%; }\n  #no-results p {\n    z-index: 50;\n    opacity: 1;\n    color: #000;\n    text-align: center;\n    width: 100%;\n    position: fixed;\n    top: 15%;\n    font-size: 35px; }\n", ""]);
+exports.push([module.i, "#no-results {\n  background: no-repeat center center #DDD url(" + __webpack_require__(530) + ");\n  opacity: 0.3;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 0;\n  width: 100%;\n  height: 100%; }\n  #no-results p {\n    z-index: 50;\n    opacity: 1;\n    color: #000;\n    text-align: center;\n    width: 100%;\n    position: fixed;\n    top: 15%;\n    font-size: 35px; }\n", ""]);
 
 // exports
 
@@ -1480,7 +1493,7 @@ module.exports = "<div id=\"details-bar\" [class]=\"'b-color-3-t '+animate()\">\
 /***/ 256:
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"details\" class=\"b-color-3\" *ngIf=\"selected\">\n\n  <header>\n    <h1 class=\"main-title\">\n      <span id=\"back\" (click)=\"closeDetails()\">Back</span>\n    </h1>\n    <div class=\"separator b-color-2\"></div>\n  </header>\n\n  <div class=\"main pt-0 pl-4 pr-4\">\n\n    <div class=\"col-sm-7 col-md-8 col-right float-sm-right\">\n      <h2>{{selected.name}}</h2>\n      <div class=\"description mb-4\">{{getDescription()}}</div>\n      <h3>Comics</h3>\n      <div id=\"comic-container\" class=\"mb-4\">\n        <div class=\"comic mb-4 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-2 float-left\" *ngFor=\"let item of selected.comics\">\n          <app-booklet [item]=\"item\"></app-booklet>\n        </div>\n\n      </div>\n      <h3>Also appears in...</h3>\n      <div class=\"series-container mb-4\">\n          <div class=\"comic mb-4 col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3 float-left\" *ngFor=\"let item of selected.seriesList\">\n            <app-booklet [item]=\"item\"></app-booklet>\n          </div>\n      </div>\n    </div>\n\n    <div class=\"col-sm-5 col-md-4 col-left float-sm-left\">\n      <div class=\"image-container img-thumbnail\" [style.background-image]=\"'url('+selected.getThumbnail()+')'\">\n        <span *ngIf=\"isFavorite()\" class=\"fa fa-star favorite\"></span>\n      </div>\n      <app-related-heroes [related]=\"getDetails()\"></app-related-heroes>\n      <div class=\"button-wrapper\">\n        <button *ngIf=\"!isFavorite()\" class=\"btn b-color-1\" (click)=\"saveFavorite()\"><span class=\"fa fa-star\"></span> Save as Favorite</button>\n        <button *ngIf=\"isFavorite()\" class=\"btn b-color-1\" (click)=\"removeFavorite()\"><span class=\"fa fa-star-o\"></span> Remove as Favorite</button>\n      </div>\n    </div>\n\n  </div>\n</div>"
+module.exports = "<div id=\"details\" class=\"b-color-3\" *ngIf=\"selected\">\n\n  <header>\n    <h1 class=\"main-title\">\n      <span id=\"back\" (click)=\"closeDetails()\">Back</span>\n    </h1>\n    <div class=\"separator b-color-2\"></div>\n  </header>\n\n  <div class=\"main pt-0 pl-4 pr-4\">\n\n    <div class=\"col-sm-7 col-md-8 col-right float-sm-right\">\n      <h2>{{selected.name}}</h2>\n      <div class=\"description mb-4\">{{getDescription()}}</div>\n      <h3>Comics</h3>\n      <div id=\"comic-container\" class=\"mb-4\">\n        <div class=\"loading\" *ngIf=\"selected.comics === undefined\"><span class=\"fa fa-spinner spin\"></span> loading</div>\n        <div *ngIf=\"!hasComics()\">There are not Comics in the Database.</div>\n        <div class=\"comic mb-4 col-6 col-sm-6 col-md-3 col-lg-3 col-xl-2 float-left\" *ngFor=\"let item of selected.comics\">\n          <app-booklet [item]=\"item\"></app-booklet>\n        </div>\n\n      </div>\n      <h3>Also appears in...</h3>\n      <div class=\"series-container mb-4\">\n          <div class=\"loading\" *ngIf=\"selected.seriesList === undefined\"><span class=\"fa fa-spinner spin\"></span> loading</div>\n          <div *ngIf=\"!hasSeries()\">There are not Series in the Database.</div>\n          <div class=\"comic mb-4 col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3 float-left\" *ngFor=\"let item of selected.seriesList\">\n            <app-booklet [item]=\"item\"></app-booklet>\n          </div>\n      </div>\n    </div>\n\n    <div class=\"col-sm-5 col-md-4 col-left float-sm-left\">\n      <div class=\"image-container img-thumbnail\" [style.background-image]=\"'url('+selected.getThumbnail()+')'\">\n        <span *ngIf=\"isFavorite()\" class=\"fa fa-star favorite\"></span>\n      </div>\n      <app-related-heroes [related]=\"getDetails()\"></app-related-heroes>\n      <div class=\"button-wrapper\">\n        <button *ngIf=\"!isFavorite()\" class=\"btn b-color-1\" (click)=\"saveFavorite()\"><span class=\"fa fa-star\"></span> Save as Favorite</button>\n        <button *ngIf=\"isFavorite()\" class=\"btn b-color-1\" (click)=\"removeFavorite()\"><span class=\"fa fa-star-o\"></span> Remove as Favorite</button>\n      </div>\n    </div>\n\n  </div>\n</div>"
 
 /***/ }),
 
@@ -1577,7 +1590,14 @@ var SuperHero = (function () {
 
 /***/ }),
 
-/***/ 531:
+/***/ 530:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "no-results.b34c7caf067be40360ee.png";
+
+/***/ }),
+
+/***/ 532:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(147);
@@ -1824,5 +1844,5 @@ var _a;
 
 /***/ })
 
-},[531]);
+},[532]);
 //# sourceMappingURL=main.bundle.js.map
